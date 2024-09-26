@@ -1,6 +1,7 @@
 # Version 1.0
 # author: Patrick Scholz Contact: patrick.alexander.scholz@rwth-aachen.de
-#currently intended to work for up to 99 simultaneously measured channels
+# currently intended to work for up to 99 simultaneously measured channels
+# Image file name format: SeriesXXX_tYYY_z0_chZZ with XXX as increment of the run per day, YYY as timeframe and ZZ as Channel number
 
 # import needed modules
 import imageio as iio
@@ -27,7 +28,6 @@ def getNumberOfChannels(imgDirectory):
     return len(numberOfChannels)
 
 # read image files
-# Image file name format: SeriesXXX_tYYY_z0_ch0Z with XXX as increment of the run per day, YYY as timeframe and Z as Channel number
 
 #request folder path
 prompter = promptlib.Files()
