@@ -8,7 +8,7 @@ import numpy as np
 import promptlib
 import os
 
-def sortNew (imagename):
+def sort (imagename):
     if imagename.endswith(".tif"):
         channelnumber = int(imagename[-6:-4])
         path = "\\" + imagename
@@ -41,9 +41,8 @@ channels = [[] for i in range(getNumberOfChannels(imgDirectory))]
 
 for file in os.listdir(imgDirectory):
     filename = os.fsdecode(file)
-
     #sorting images into their channels
-    sortNew(filename)
+    sort(filename)
 
 
 #imagepaths in list structure
