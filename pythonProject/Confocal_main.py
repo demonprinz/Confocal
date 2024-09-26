@@ -9,6 +9,7 @@ import imageio as iio
 import numpy as np
 import promptlib
 import os
+from PIL import Image
 
 def sort (imagename):
     if imagename.endswith(".tif"):
@@ -82,6 +83,8 @@ imgList = imageLists(imagePaths(channels, imgDirectory))
 
 #stacking the images
 imgStack = stackingImages(imgList)
+print(imgStack[1].shape)
 
-print('Volume dimensions:', imgStack[0].shape)
-print('Volume dimensions:', imgStack[1].shape)
+# colors = bytes(imgStack[0])
+# img = Image.frombytes('RGB', (1024,370176), colors)
+# img.show()
