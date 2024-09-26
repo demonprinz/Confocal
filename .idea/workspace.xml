@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="Renamed sortNew to sort">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pythonProject/Confocal_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Confocal_main.py" afterDir="false" />
-    </list>
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="update main after merge with ReworkLists" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,7 +26,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="ReworkLists" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -58,7 +55,7 @@
   "keyToString": {
     "Python.Confocal_main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "ReworkLists",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -169,7 +166,8 @@
     <MESSAGE value="loading images sorted by channels into one stack per channel held in a list works. Might clean up the channel sorting at a later point in time" />
     <MESSAGE value="Reworked sorting the images by channels" />
     <MESSAGE value="Renamed sortNew to sort" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renamed sortNew to sort" />
+    <MESSAGE value="update main after merge with ReworkLists" />
+    <option name="LAST_COMMIT_MESSAGE" value="update main after merge with ReworkLists" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Confocal$Confocal_main.coverage" NAME="Confocal_main Coverage Results" MODIFIED="1727383263833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
