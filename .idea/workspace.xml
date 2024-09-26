@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="update main after merge with ReworkLists">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pythonProject/Confocal_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Confocal_main.py" afterDir="false" />
-    </list>
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="testing imaging the stack, nothing major to last commit." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -155,7 +152,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727381221730</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="testing imaging the stack, nothing major to last commit.">
+      <option name="closed" value="true" />
+      <created>1727387178597</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1727387178597</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,9 +175,10 @@
     <MESSAGE value="Reworked sorting the images by channels" />
     <MESSAGE value="Renamed sortNew to sort" />
     <MESSAGE value="update main after merge with ReworkLists" />
-    <option name="LAST_COMMIT_MESSAGE" value="update main after merge with ReworkLists" />
+    <MESSAGE value="testing imaging the stack, nothing major to last commit." />
+    <option name="LAST_COMMIT_MESSAGE" value="testing imaging the stack, nothing major to last commit." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Confocal$Confocal_main.coverage" NAME="Confocal_main Coverage Results" MODIFIED="1727386866681" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
+    <SUITE FILE_PATH="coverage/Confocal$Confocal_main.coverage" NAME="Confocal_main Coverage Results" MODIFIED="1727386903713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
   </component>
 </project>
