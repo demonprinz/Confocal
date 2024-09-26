@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="Renamed sortNew to sort" />
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="Renamed sortNew to sort">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/Confocal_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Confocal_main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +58,7 @@
   "keyToString": {
     "Python.Confocal_main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "ReworkLists",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -169,6 +172,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Renamed sortNew to sort" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Confocal$Confocal_main.coverage" NAME="Confocal_main Coverage Results" MODIFIED="1727380968241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
+    <SUITE FILE_PATH="coverage/Confocal$Confocal_main.coverage" NAME="Confocal_main Coverage Results" MODIFIED="1727383263833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
   </component>
 </project>
