@@ -1,7 +1,8 @@
 # Version 1.0
 # author: Patrick Scholz Contact: patrick.alexander.scholz@rwth-aachen.de
-# currently intended to work for up to 99 simultaneously measured channels
+# currently intended to work for up to 99 simultaneously measured channels, files must be in *.tif format
 # Image file name format: SeriesXXX_tYYY_z0_chZZ with XXX as increment of the run per day, YYY as timeframe and ZZ as Channel number
+# for now the only hard requirement for the name format is the name ends with chZZ.tif
 
 # import needed modules
 import imageio as iio
@@ -27,6 +28,38 @@ def getNumberOfChannels(imgDirectory):
                 numberOfChannels.append(filenameEnding)
     return len(numberOfChannels)
 
+def imagePaths(channelList, dir):
+    imgPathList = [[] for i in range(len(channelList))]
+    for i in range(len(imgPathList)):
+        for j in range(len(channelList[i])):
+            imgPathList[i].append(dir + channelList[i][j])
+
+    return imgPathList
+
+def imageLists(imgPathList):
+    imgLists = [[] for i in range(len(imgPathList))]
+    for i in range(len(imgLists)):
+        for j in range(len(imgPathList[i])):
+            imgLists[i].append(iio.v3.imread(imgPathList[i][j]))
+
+    return imgLists
+
+
+# for i in range(len(imgList)):
+#     if channels[i] == []: #check if channel is empty
+#         break
+#     else:
+#         stack = np.stack(imgList[i], axis=0)
+#         imgStack.append(stack)
+
+def stackingImages(imgLists):
+    imgStacks = []
+    for i in range(len(imgLists)):
+        imgStacks.append(np.stack(imgLists[i]))
+    return imgStacks
+
+
+
 # read image files
 
 #request folder path
@@ -44,34 +77,11 @@ for file in os.listdir(imgDirectory):
     #sorting images into their channels
     sort(filename)
 
-
-#imagepaths in list structure
-imgPathList=[[] for i in range(len(channels))]
-for i in range(len(channels)): #iterating over the channels
-    if channels[i] == []: #check if channel is empty
-        break
-    else:
-        for j in range(len(channels[i])): #iterating over the paths in this channel
-            imgPath = imgDirectory + channels[i][j]
-            imgPathList[i].append(imgPath)
-
 #images into a list structure
-imgList = [[] for i in range(len(channels))]
-for i in range(len(imgPathList)): #iterating over the channels
-    if channels[i] == []: #check if channel is empty
-        break
-    else:
-        for j in range(len(imgPathList[i])): #iterating over the paths per channel
-            imgList[i].append(iio.v3.imread(imgPathList[i][j]))
-
+imgList = imageLists(imagePaths(channels, imgDirectory))
 
 #stacking the images
-imgStack = []
-for i in range(len(imgList)):
-    if channels[i] == []: #check if channel is empty
-        break
-    else:
-        stack = np.stack(imgList[i], axis=0)
-        imgStack.append(stack)
+imgStack = stackingImages(imgList)
+
 print('Volume dimensions:', imgStack[0].shape)
 print('Volume dimensions:', imgStack[1].shape)
