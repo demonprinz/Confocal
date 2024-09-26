@@ -9,11 +9,10 @@ import promptlib
 import os
 
 # read image files
-# Image file name format: SeriesXXX_tYYY_z0_ch0Z with XXX as increment of the run per day, YYY as timeframe and Z as Channel number 0 being fluorescent and 1 being optical
+# Image file name format: SeriesXXX_tYYY_z0_ch0Z with XXX as increment of the run per day, YYY as timeframe and Z as Channel number
 
 #create list into which the image get sorted by channel
 channels = [[] for i in range(10)]
-print(channels)
 #request folder path
 prompter = promptlib.Files()
 #write path into string
@@ -22,7 +21,8 @@ imgFolderPath = prompter.dir()
 imgDirectory = os.fspath(imgFolderPath)
 
 def sort (channelnumber, imagename):
-    channels[channelnumber].append(imagename)
+    path = "\\" + imagename
+    channels[channelnumber].append(path)
 
 for file in os.listdir(imgDirectory):
     filename = os.fsdecode(file)
@@ -49,17 +49,33 @@ for file in os.listdir(imgDirectory):
         case "9":
             sort(9, filename)
 
-print(channels)
 
-for i in range length(channels[1]):
-    print(channels[1][i])
-#imagepath tuple
-# tup=()
-# for i in channels [1]:
-#     imgFolderPath = imgDirectory + "/"
-#     tup = tup + (imgFolderPath + [channels[1][i])
-# print(tup)
-#im1 = iio.v3.imread(imgFolderPath + r'\Series013_t000_z0_ch00.tif') #r prefix to protect the Backslash needed for the path
+#imagepaths in list structure
+imgPathList=[[] for i in range(len(channels))]
+for i in range(len(channels)): #iterating over the channels
+    if channels[i] == []: #check if channel is empty
+        break
+    else:
+        for j in range(len(channels[i])): #iterating over the paths in this channel
+            imgPath = imgDirectory + channels[i][j]
+            imgPathList[i].append(imgPath)
 
-#ImgStack = np.stack((iio.v3.imread(imgFolderPath + channels[0])), axis=0)
-#print('Volume dimensions:', ImgStack.shape)
+#images into a list structure
+imgList = [[] for i in range(len(channels))]
+for i in range(len(imgPathList)): #iterating over the channels
+    if channels[i] == []: #check if channel is empty
+        break
+    else:
+        for j in range(len(imgPathList[i])): #iterating over the paths per channel
+            imgList[i].append(iio.v3.imread(imgPathList[i][j]))
+
+
+#stacking the images
+imgStack = []
+for i in range(len(imgList)):
+    if channels[i] == []: #check if channel is empty
+        break
+    else:
+        stack = np.stack(imgList[i], axis=0)
+        imgStack.append(stack)
+print('Volume dimensions:', imgStack[0].shape)
