@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="Import a single specific image">
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="get all image names in the directory specified by the user and sort them into channels">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/Confocal_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Confocal_main.py" afterDir="false" />
     </list>
@@ -83,7 +83,7 @@
       <workItem from="1727028227151" duration="46000" />
       <workItem from="1727028704616" duration="136000" />
       <workItem from="1727116357228" duration="2570000" />
-      <workItem from="1727286489539" duration="2896000" />
+      <workItem from="1727286489539" duration="6937000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of myin python file">
       <option name="closed" value="true" />
@@ -109,7 +109,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727119670804</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="get all image names in the directory specified by the user and sort them into channels">
+      <option name="closed" value="true" />
+      <created>1727289704177</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1727289704177</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,9 +126,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Creation of myin python file" />
     <MESSAGE value="Import a single specific image" />
-    <option name="LAST_COMMIT_MESSAGE" value="Import a single specific image" />
+    <MESSAGE value="get all image names in the directory specified by the user and sort them into channels" />
+    <option name="LAST_COMMIT_MESSAGE" value="get all image names in the directory specified by the user and sort them into channels" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Confocal$Confocal_main.coverage" NAME="Confocal_main Coverage Results" MODIFIED="1727289415849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
+    <SUITE FILE_PATH="coverage/Confocal$Confocal_main.coverage" NAME="Confocal_main Coverage Results" MODIFIED="1727324068127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
   </component>
 </project>

@@ -51,7 +51,15 @@ for file in os.listdir(imgDirectory):
 
 print(channels)
 
+for i in range length(channels[1]):
+    print(channels[1][i])
+#imagepath tuple
+# tup=()
+# for i in channels [1]:
+#     imgFolderPath = imgDirectory + "/"
+#     tup = tup + (imgFolderPath + [channels[1][i])
+# print(tup)
 #im1 = iio.v3.imread(imgFolderPath + r'\Series013_t000_z0_ch00.tif') #r prefix to protect the Backslash needed for the path
 
-#ImgStack = np.stack((im1), axis=0)
+#ImgStack = np.stack((iio.v3.imread(imgFolderPath + channels[0])), axis=0)
 #print('Volume dimensions:', ImgStack.shape)
