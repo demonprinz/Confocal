@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="split up Confocal_main.py into stacking.py and Main.py which should work properly">
-      <change afterPath="$PROJECT_DIR$/pythonProject/analyze.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pythonProject/stacking.py" afterDir="false" />
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="Reworking the split up because shit happened">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/stacking.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/stacking.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +30,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Refactor_main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -59,7 +59,7 @@
   "keyToString": {
     "Python.Confocal_main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Refactor-main",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -73,6 +73,36 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\schol\Documents\GitRepos\Confocal\Confocal\pythonProject" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Confocal" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pythonProject" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pythonProject/Main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -97,6 +127,7 @@
       <workItem from="1727286489539" duration="7078000" />
       <workItem from="1727371018614" duration="7443000" />
       <workItem from="1727474810812" duration="2651000" />
+      <workItem from="1727478706594" duration="693000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of myin python file">
       <option name="closed" value="true" />
@@ -186,7 +217,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727477172040</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Reworking the split up because shit happened">
+      <option name="closed" value="true" />
+      <created>1727478840935</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1727478840935</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Reworking the split up because shit happened">
+      <option name="closed" value="true" />
+      <created>1727479033666</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1727479033666</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,7 +251,8 @@
     <MESSAGE value="testing imaging the stack, nothing major to last commit." />
     <MESSAGE value="pushing new branch to refactor Confocal_main.py into separate files. Establish analyze.py which is intended to be used for calculation functions." />
     <MESSAGE value="split up Confocal_main.py into stacking.py and Main.py which should work properly" />
-    <option name="LAST_COMMIT_MESSAGE" value="split up Confocal_main.py into stacking.py and Main.py which should work properly" />
+    <MESSAGE value="Reworking the split up because shit happened" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reworking the split up because shit happened" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Confocal$Main.coverage" NAME="Main Coverage Results" MODIFIED="1727476292579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
