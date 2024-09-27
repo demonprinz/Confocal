@@ -46,6 +46,7 @@ def imageLists(imgPathList):
     return imgLists
 
 
+
 # for i in range(len(imgList)):
 #     if channels[i] == []: #check if channel is empty
 #         break
