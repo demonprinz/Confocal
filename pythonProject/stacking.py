@@ -7,11 +7,11 @@
 # import needed modules
 import imageio as iio
 import numpy as np
-import promptlib
 import os
-from PIL import Image
 
-def sort (imagename):
+
+
+def sort (imagename, channels):
     if imagename.endswith(".tif"):
         channelnumber = int(imagename[-6:-4])
         path = "\\" + imagename
@@ -45,46 +45,17 @@ def imageLists(imgPathList):
 
     return imgLists
 
-
-# for i in range(len(imgList)):
-#     if channels[i] == []: #check if channel is empty
-#         break
-#     else:
-#         stack = np.stack(imgList[i], axis=0)
-#         imgStack.append(stack)
-
 def stackingImages(imgLists):
     imgStacks = []
     for i in range(len(imgLists)):
         imgStacks.append(np.stack(imgLists[i]))
     return imgStacks
 
+def sortFilenames(imgDirectory, channels):
+    for file in os.listdir(imgDirectory):
+        filename = os.fsdecode(file)
+        # sorting images into their channels
+        sort(filename, channels)
 
+    return channels
 
-# read image files
-
-#request folder path
-prompter = promptlib.Files()
-#write path into string
-imgFolderPath = prompter.dir()
-#create directory object
-imgDirectory = os.fspath(imgFolderPath)
-#create list into which the image get sorted by channel
-channels = [[] for i in range(getNumberOfChannels(imgDirectory))]
-
-
-for file in os.listdir(imgDirectory):
-    filename = os.fsdecode(file)
-    #sorting images into their channels
-    sort(filename)
-
-#images into a list structure
-imgList = imageLists(imagePaths(channels, imgDirectory))
-
-#stacking the images
-imgStack = stackingImages(imgList)
-print(imgStack[1].shape)
-
-# colors = bytes(imgStack[0])
-# img = Image.frombytes('RGB', (1024,370176), colors)
-# img.show()
