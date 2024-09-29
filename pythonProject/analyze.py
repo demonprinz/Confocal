@@ -14,13 +14,16 @@ def getArea():
 
     return area
 
-def showImagesFromStack(stack, framerate):
+def showImagesFromStack(stack, framerate, defaultFrame = 0):
     cols = int(stack.shape[0]/framerate)
     fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=1500)
-
-    for i in range(cols):
-        im = stack[i*framerate]
-        axes[i].imshow(im)
-        axes[i].axis('off')
-
+    if cols >> 1:
+        for i in range(cols):
+            im = stack[i*framerate]
+            axes[i].imshow(im)
+            axes[i].axis('off')
+    else:
+        im = stack[defaultFrame]
+        axes.imshow(im)
+        axes.axis('off')
     plt.show()

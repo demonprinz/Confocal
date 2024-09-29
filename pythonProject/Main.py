@@ -35,4 +35,4 @@ imgList = stacking.imageLists(stacking.imagePaths(channels, imgDirectory))
 #stacking the images
 imgStack = stacking.stackingImages(imgList)
 print(imgStack[0].shape[0])
-analyze.showImagesFromStack(imgStack[0], 100)
+analyze.showImagesFromStack(imgStack[0], imgStack[0].shape[0])
