@@ -7,12 +7,23 @@
 #import modules
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2
 
+def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 30, color_rangeupper = 255):
+    #image = cv2.imread("test.png")
+    print(image.shape)
+    # Define the target color and color range (in RGB format)
+    target_color = (cutoffB, cutoffG, cutoffR)  # OpenCV order of colors is BGR
+    # Calculate the percentage of the image that is within the color range of the target
+    lower_bound = np.clip(np.array(target_color) - color_rangelower, 0, 255)
+    upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
+    mask = cv2.inRange(image, lower_bound, upper_bound)
+    cv2.imwrite('mask.png', mask)  # Save mask for testing
+    num_pixels = image.shape[0] * image.shape[1]
+    target_pixels = cv2.countNonZero(mask)
+    percentage = (target_pixels / num_pixels) * 100
 
-def getArea():
-    area = 0
-
-    return area
+    return percentage
 
 def showImagesFromStack(stack, framerate, defaultFrame = 0):
     cols = int(stack.shape[0]/framerate)
@@ -27,6 +38,7 @@ def showImagesFromStack(stack, framerate, defaultFrame = 0):
         axes.imshow(im)
         axes.axis('off')
     plt.show()
+    #fig.savefig('test.png')
 
 def substractDust(stack):
     dust = stack[0]
