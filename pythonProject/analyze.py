@@ -5,7 +5,7 @@
 # for now the only hard requirement for the name format is the name ends with chZZ.tif
 
 #import modules
-import imageio as iio
+import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -27,3 +27,10 @@ def showImagesFromStack(stack, framerate, defaultFrame = 0):
         axes.imshow(im)
         axes.axis('off')
     plt.show()
+
+def substractDust(stack):
+    dust = stack[0]
+    dust[dust < 250] = 0
+    subStack = np.subtract(stack, dust)
+
+    return subStack
