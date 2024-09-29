@@ -3,3 +3,24 @@
 # currently intended to work for up to 99 simultaneously measured channels, files must be in *.tif format
 # Image file name format: SeriesXXX_tYYY_z0_chZZ with XXX as increment of the run per day, YYY as timeframe and ZZ as Channel number
 # for now the only hard requirement for the name format is the name ends with chZZ.tif
+
+#import modules
+import imageio as iio
+import matplotlib.pyplot as plt
+
+
+def getArea():
+    area = 0
+
+    return area
+
+def showImagesFromStack(stack, framerate):
+    cols = int(stack.shape[0]/framerate)
+    fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=1500)
+
+    for i in range(cols):
+        im = stack[i*framerate]
+        axes[i].imshow(im)
+        axes[i].axis('off')
+
+    plt.show()

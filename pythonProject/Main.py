@@ -34,10 +34,5 @@ imgList = stacking.imageLists(stacking.imagePaths(channels, imgDirectory))
 
 #stacking the images
 imgStack = stacking.stackingImages(imgList)
-print(imgStack[0].shape)
-
-
-print(imgStack[1][0][0])
-colors = bytes(imgStack[0])
-img = Image.frombytes('RGB', (1024,370176), colors)
-img.show()
+print(imgStack[0].shape[0])
+analyze.showImagesFromStack(imgStack[0], 100)
