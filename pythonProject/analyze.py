@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 30, color_rangeupper = 255):
+def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 30, color_rangeupper = 240):
     #image = cv2.imread("test.png")
     print(image.shape)
     # Define the target color and color range (in RGB format)
@@ -20,14 +20,18 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 30, color_range
     mask = cv2.inRange(image, lower_bound, upper_bound)
     cv2.imwrite('mask.png', mask)  # Save mask for testing
     num_pixels = image.shape[0] * image.shape[1]
+    print("Pixelnumber: " + str(num_pixels))
+    print(image.shape[0], image.shape[1])
     target_pixels = cv2.countNonZero(mask)
+    print(mask)
+    print(target_pixels)
     percentage = (target_pixels / num_pixels) * 100
 
     return percentage
 
 def showImagesFromStack(stack, framerate, defaultFrame = 0):
     cols = int(stack.shape[0]/framerate)
-    fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=1500)
+    fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=500)
     if cols >> 1:
         for i in range(cols):
             im = stack[i*framerate]
