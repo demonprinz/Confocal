@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 30, color_rangeupper = 250):
+def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 50, color_rangeupper = 250):
     image = cv2.imread("test.png")
     print(image.shape)
     # Define the target color and color range (in RGB format)
@@ -31,7 +31,7 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 30, color_range
 
 def showImagesFromStack(stack, framerate, defaultFrame = 0):
     cols = int(stack.shape[0]/framerate)
-    fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=500)
+    fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=5000)
     if cols >> 1:
         for i in range(cols):
             im = stack[i*framerate]
@@ -42,7 +42,7 @@ def showImagesFromStack(stack, framerate, defaultFrame = 0):
         axes.imshow(im)
         axes.axis('off')
     plt.show()
-    fig.savefig('test.png')
+    #fig.savefig('test.png')
 
 def substractDust(stack):
     dust = stack[0]

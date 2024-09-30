@@ -10,7 +10,8 @@ import stacking
 import analyze
 import promptlib
 import os
-from PIL import Image
+import tkinter as tk
+import GUI
 
 # read image files
 
@@ -40,4 +41,5 @@ imgStack = stacking.stackingImages(imgList)
 #analyze.showImagesFromStack(imgStack[0], imgStack[0].shape[0], defaultFrame= 300)
 subStack = analyze.substractDust(imgStack[0])
 #analyze.showImagesFromStack(subStack, 723, defaultFrame= 140)
-print(analyze.getArea(subStack[140], 0,130,0))
+#print(analyze.getArea(subStack[140], 0,130,0))
+GUI.ImageCropper(tk.Tk())
