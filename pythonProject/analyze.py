@@ -9,8 +9,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 30, color_rangeupper = 240):
-    #image = cv2.imread("test.png")
+def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 30, color_rangeupper = 250):
+    image = cv2.imread("test.png")
     print(image.shape)
     # Define the target color and color range (in RGB format)
     target_color = (cutoffB, cutoffG, cutoffR)  # OpenCV order of colors is BGR
@@ -18,7 +18,7 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 30, color_range
     lower_bound = np.clip(np.array(target_color) - color_rangelower, 0, 255)
     upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
     mask = cv2.inRange(image, lower_bound, upper_bound)
-    cv2.imwrite('mask.png', mask)  # Save mask for testing
+    cv2.imwrite('mask2.png', mask)  # Save mask for testing
     num_pixels = image.shape[0] * image.shape[1]
     print("Pixelnumber: " + str(num_pixels))
     print(image.shape[0], image.shape[1])
@@ -42,7 +42,7 @@ def showImagesFromStack(stack, framerate, defaultFrame = 0):
         axes.imshow(im)
         axes.axis('off')
     plt.show()
-    #fig.savefig('test.png')
+    fig.savefig('test.png')
 
 def substractDust(stack):
     dust = stack[0]
