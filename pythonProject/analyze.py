@@ -9,6 +9,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
+#coordinates of upper left corner and lower right corner of the catalyst rectangle
+x = 0
+x1 = 0
+y = 0
+y1 = 0
+
 def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 50, color_rangeupper = 250):
     image = cv2.imread("test.png")
     print(image.shape)
@@ -50,3 +56,16 @@ def substractDust(stack):
     subStack = np.subtract(stack, dust)
 
     return subStack
+
+def setCatalystBoundrys(xl, xr, yu, yl):            #xl = left x, xr = right x, yu = upper y, yl = lower y
+    global x, y, x1, y1
+    x = int(xl)
+    y = int(yu)
+    x1 = int(xr)
+    y1 = int(yl)
+    print(x, y)
+
+
+def crop(image):
+    croped_image = image[x:x1, y:y1]
+    showImagesFromStack(croped_image, 1, 0)
