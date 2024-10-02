@@ -60,7 +60,6 @@ def substractDust(stack):
 
 
 def crop(image, x, x1, y, y1):
-    #croped_image = image[start_point[0]:end_point[0], start_point[1]:end_point[1]]
     croped_image = image[y:y1, x:x1]
     cv2.imshow("Test", croped_image)
 
@@ -87,9 +86,27 @@ def draw_rectangle(event, x, y, flags, param):
 
         # Draw the rectangle on the image
         cv2.rectangle(image, start_point, end_point, (200, 0, 0), 2)
-        cv2.imshow("Image", image)
+        cv2.imshow("Image Cropper", image)
 
         # Print the coordinates of the rectangle
         print(f"Rectangle coordinates: {start_point} to {end_point}")
         print(start_point[0], end_point[1])
         crop(image, start_point[0], end_point[0], start_point[1], end_point[1])
+
+def cropper(img):
+    # Create a window and set the mouse callback
+    global image
+    cv2.namedWindow("Image Cropper")
+    image = img
+    cv2.setMouseCallback("Image Cropper", draw_rectangle)
+
+    while True:
+        cv2.imshow("Image Cropper", image)
+        key = cv2.waitKey(1)
+
+        # Break the loop when 'q' is pressed
+        if key == ord('q'):
+            break
+
+    # Cleanup
+    cv2.destroyAllWindows()

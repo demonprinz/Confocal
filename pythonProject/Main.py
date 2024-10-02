@@ -42,20 +42,6 @@ subStack = analyze.substractDust(imgStack[0])
 #analyze.showImagesFromStack(subStack, 723, defaultFrame= 140)
 # print(analyze.getArea(subStack[140], 0,130,0))
 
-#
-# Create a window and set the mouse callback
-cv2.namedWindow("Image")
-analyze.image = subStack[140]
-cv2.setMouseCallback("Image", analyze.draw_rectangle)
+analyze.cropper(subStack[1])
 
-while True:
-    cv2.imshow("Image", subStack[140])
-    key = cv2.waitKey(1)
-
-    # Break the loop when 'q' is pressed
-    if key == ord('q'):
-        break
-
-# Cleanup
-cv2.destroyAllWindows()
 
