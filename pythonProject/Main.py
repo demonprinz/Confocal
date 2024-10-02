@@ -42,6 +42,6 @@ subStack = analyze.substractDust(imgStack[0])
 #analyze.showImagesFromStack(subStack, 723, defaultFrame= 140)
 # print(analyze.getArea(subStack[140], 0,130,0))
 
-analyze.cropper(subStack[1])
+analyze.cropper(subStack[1], subStack)
 
 

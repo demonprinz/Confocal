@@ -14,12 +14,13 @@ start_point = None
 end_point = None
 drawing = False
 image = None
+imageStack = None
 
 
 def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
     #image = cv2.imread("test.png")
     print(image.shape)
-    # Define the target color and color range (in RGB format)
+    # Define the target color and color range
     target_color = (cutoffB, cutoffG, cutoffR)  # OpenCV order of colors is BGR
     # Calculate the percentage of the image that is within the color range of the target
     lower_bound = np.clip(np.array(target_color) - color_rangelower, 0, 255)
@@ -38,7 +39,7 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
 
 def showImagesFromStack(stack, framerate, defaultFrame = 0):
     cols = int(stack.shape[0]/framerate)
-    fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=5000)
+    fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=500)
     if cols >> 1:
         for i in range(cols):
             im = stack[i*framerate]
@@ -59,10 +60,13 @@ def substractDust(stack):
     return subStack
 
 
-def crop(image, x, x1, y, y1):
-    croped_image = image[y:y1, x:x1]
-    cv2.imshow("Test", croped_image)
-
+def crop(x, x1, y, y1):
+    #croped_image = image[y:y1, x:x1]
+    croped_stack = imageStack[:,y:y1, x:x1]
+    #cv2.imshow("Test", croped_image)
+    #print(croped_image.shape)
+    print(croped_stack.shape)
+    showImagesFromStack(croped_stack, 150, 100)
 
 # Mouse callback function
 def draw_rectangle(event, x, y, flags, param):
@@ -91,13 +95,14 @@ def draw_rectangle(event, x, y, flags, param):
         # Print the coordinates of the rectangle
         print(f"Rectangle coordinates: {start_point} to {end_point}")
         print(start_point[0], end_point[1])
-        crop(image, start_point[0], end_point[0], start_point[1], end_point[1])
+        crop(start_point[0], end_point[0], start_point[1], end_point[1])
 
-def cropper(img):
+def cropper(img, imgStack):
     # Create a window and set the mouse callback
-    global image
+    global image, imageStack
     cv2.namedWindow("Image Cropper")
     image = img
+    imageStack = imgStack
     cv2.setMouseCallback("Image Cropper", draw_rectangle)
 
     while True:
