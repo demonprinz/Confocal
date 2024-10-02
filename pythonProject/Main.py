@@ -39,9 +39,6 @@ imgStack = stacking.stackingImages(imgList)
 #print(imgStack[0].shape[0])
 #analyze.showImagesFromStack(imgStack[0], imgStack[0].shape[0], defaultFrame= 300)
 subStack = analyze.substractDust(imgStack[0])
-#analyze.showImagesFromStack(subStack, 723, defaultFrame= 140)
-# print(analyze.getArea(subStack[140], 0,130,0))
-
-analyze.cropper(subStack[1], subStack)
-
-
+#get stacked images of the catalyst area only
+cropped_stack= analyze.cropper(subStack[1], subStack)
+print(analyze.getArea(cropped_stack[140], 0,130,0))

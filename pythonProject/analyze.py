@@ -15,6 +15,7 @@ end_point = None
 drawing = False
 image = None
 imageStack = None
+cropped_stack = None
 
 
 def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
@@ -26,7 +27,7 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
     lower_bound = np.clip(np.array(target_color) - color_rangelower, 0, 255)
     upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
     mask = cv2.inRange(image, lower_bound, upper_bound)
-    cv2.imwrite('mask2.png', mask)  # Save mask for testing
+    cv2.imwrite('mask.png', mask)  # Save mask for testing
     num_pixels = image.shape[0] * image.shape[1]
     print("Pixelnumber: " + str(num_pixels))
     print(image.shape[0], image.shape[1])
@@ -61,17 +62,14 @@ def substractDust(stack):
 
 
 def crop(x, x1, y, y1):
-    #croped_image = image[y:y1, x:x1]
-    croped_stack = imageStack[:,y:y1, x:x1]
-    #cv2.imshow("Test", croped_image)
-    #print(croped_image.shape)
-    print(croped_stack.shape)
-    showImagesFromStack(croped_stack, 150, 100)
+    global cropped_stack
+    cropped_stack = imageStack[:,y:y1, x:x1]
+
 
 # Mouse callback function
 def draw_rectangle(event, x, y, flags, param):
     global start_point, end_point, drawing, image
-
+    cropped_stack = None
     # When the left mouse button is pressed, record the starting point
     if event == cv2.EVENT_LBUTTONDOWN:
         drawing = True
@@ -89,7 +87,7 @@ def draw_rectangle(event, x, y, flags, param):
         end_point = (x, y)
 
         # Draw the rectangle on the image
-        cv2.rectangle(image, start_point, end_point, (200, 0, 0), 2)
+        cv2.rectangle(image, start_point, end_point, (200, 0, 0), 1)
         cv2.imshow("Image Cropper", image)
 
         # Print the coordinates of the rectangle
@@ -115,3 +113,4 @@ def cropper(img, imgStack):
 
     # Cleanup
     cv2.destroyAllWindows()
+    return cropped_stack
