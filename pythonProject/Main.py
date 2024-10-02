@@ -11,7 +11,6 @@ import analyze
 import promptlib
 import os
 import cv2
-import test
 
 # read image files
 
@@ -41,14 +40,13 @@ imgStack = stacking.stackingImages(imgList)
 #analyze.showImagesFromStack(imgStack[0], imgStack[0].shape[0], defaultFrame= 300)
 subStack = analyze.substractDust(imgStack[0])
 #analyze.showImagesFromStack(subStack, 723, defaultFrame= 140)
-#print(analyze.getArea(subStack[140], 0,130,0))
+# print(analyze.getArea(subStack[140], 0,130,0))
 
-#analyze.crop(subStack[140])
-
+#
 # Create a window and set the mouse callback
 cv2.namedWindow("Image")
-test.image = subStack[140]
-cv2.setMouseCallback("Image", test.draw_rectangle)
+analyze.image = subStack[140]
+cv2.setMouseCallback("Image", analyze.draw_rectangle)
 
 while True:
     cv2.imshow("Image", subStack[140])
@@ -60,3 +58,4 @@ while True:
 
 # Cleanup
 cv2.destroyAllWindows()
+

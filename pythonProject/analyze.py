@@ -9,14 +9,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-#coordinates of upper left corner and lower right corner of the catalyst rectangle
-x = 0
-x1 = 0
-y = 0
-y1 = 0
+# Global variables to store the coordinates
+start_point = None
+end_point = None
+drawing = False
+image = None
 
-def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 50, color_rangeupper = 250):
-    image = cv2.imread("test.png")
+
+def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
+    #image = cv2.imread("test.png")
     print(image.shape)
     # Define the target color and color range (in RGB format)
     target_color = (cutoffB, cutoffG, cutoffR)  # OpenCV order of colors is BGR
@@ -57,15 +58,38 @@ def substractDust(stack):
 
     return subStack
 
-def setCatalystBoundrys(xl, xr, yu, yl):            #xl = left x, xr = right x, yu = upper y, yl = lower y
-    global x, y, x1, y1
-    x = int(xl)
-    y = int(yu)
-    x1 = int(xr)
-    y1 = int(yl)
-    print(x, y)
+
+def crop(image, x, x1, y, y1):
+    #croped_image = image[start_point[0]:end_point[0], start_point[1]:end_point[1]]
+    croped_image = image[y:y1, x:x1]
+    cv2.imshow("Test", croped_image)
 
 
-def crop(image):
-    croped_image = image[x:x1, y:y1]
-    showImagesFromStack(croped_image, 1, 0)
+# Mouse callback function
+def draw_rectangle(event, x, y, flags, param):
+    global start_point, end_point, drawing, image
+
+    # When the left mouse button is pressed, record the starting point
+    if event == cv2.EVENT_LBUTTONDOWN:
+        drawing = True
+        start_point = (x, y)
+        end_point = start_point
+
+    # When the mouse is moved while the left button is pressed, update the endpoint
+    elif event == cv2.EVENT_MOUSEMOVE:
+        if drawing:
+            end_point = (x, y)
+
+    # When the left mouse button is released, finalize the rectangle
+    elif event == cv2.EVENT_LBUTTONUP:
+        drawing = False
+        end_point = (x, y)
+
+        # Draw the rectangle on the image
+        cv2.rectangle(image, start_point, end_point, (200, 0, 0), 2)
+        cv2.imshow("Image", image)
+
+        # Print the coordinates of the rectangle
+        print(f"Rectangle coordinates: {start_point} to {end_point}")
+        print(start_point[0], end_point[1])
+        crop(image, start_point[0], end_point[0], start_point[1], end_point[1])
