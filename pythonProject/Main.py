@@ -10,6 +10,7 @@ import stacking
 import analyze
 import promptlib
 import os
+import matplotlib.pyplot as plt
 
 # read image files
 
@@ -38,7 +39,10 @@ subStack = analyze.substractDust(imgStack)
 #get stacked images of the catalyst area only
 
 cropped_stack= analyze.cropper(subStack[0][1], subStack)
-print(analyze.getArea(cropped_stack[0][140], 0,130,0))
-analyze.showImagesFromStack(cropped_stack[0], 100, 140)
-analyze.showImagesFromStack(cropped_stack[1], 100, 140)
+# print(analyze.getArea(cropped_stack[0][140], 0,130,0))
+# analyze.showImagesFromStack(cropped_stack[0], 100, 140)
+# analyze.showImagesFromStack(cropped_stack[1], 100, 140)
 
+areaList = analyze.areaList(cropped_stack[0], 0, 130, 0)
+plt.plot(areaList)
+plt.show()

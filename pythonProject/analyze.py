@@ -28,9 +28,9 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
     lower_bound = np.clip(np.array(target_color) - color_rangelower, 0, 255)
     upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
     mask = cv2.inRange(image, lower_bound, upper_bound)
-    cv2.imwrite('mask.png', mask)  # Save mask for testing
+    #cv2.imwrite('mask.png', mask)  # Save mask for testing
     num_pixels = image.shape[0] * image.shape[1]
-    print("Pixelnumber: " + str(num_pixels))
+    #print("Pixelnumber: " + str(num_pixels))
 
     target_pixels = cv2.countNonZero(mask)
 
@@ -72,6 +72,10 @@ def crop(x, x1, y, y1):
 
 # Mouse callback function
 def draw_rectangle(event, x, y, flags, param):
+    # Rectangle coordinates: (164, 453) to (858, 114)
+    #Rectangle coordinates: (861, 442) to (162, 114)
+    # Rectangle coordinates: (168, 114) to (860, 447)
+
     global start_point, end_point, drawing, image
     # When the left mouse button is pressed, record the starting point
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -92,6 +96,23 @@ def draw_rectangle(event, x, y, flags, param):
         # Draw the rectangle on the image
         cv2.rectangle(image, start_point, end_point, (200, 0, 0), 1)
         cv2.imshow("Image Cropper", image)
+        point1 = list(start_point)
+        point2 = list(end_point)
+        if point1[1] >> point2[1]:
+            print("test1")
+            value = point1[1]
+            point1 = [point1[0], point2[1]]
+            point2 = [point2[0], value]
+            start_point = tuple(point1)
+            end_point = tuple(point2)
+
+        if start_point[0] >> end_point[0]:
+            print("test2")
+            value = point1[1]
+            point1 = [point2[0], point1[1]]
+            point2 = [value, point2[1]]
+            start_point = tuple(point1)
+            end_point = tuple(point2)
 
         # Print the coordinates of the rectangle
         print(f"Rectangle coordinates: {start_point} to {end_point}")
@@ -117,3 +138,10 @@ def cropper(img, imgStack):
     # Cleanup
     cv2.destroyAllWindows()
     return cropped_stack
+
+def areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
+    areaList = []
+    for i in range(imageStack.shape[0]):
+        areaList.append(getArea(imageStack[i], cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper))
+
+    return areaList
