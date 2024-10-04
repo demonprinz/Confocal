@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
+
 # Global variables to store the coordinates
 start_point = None
 end_point = None
@@ -20,7 +21,7 @@ cropped_stack = None
 
 def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
     #image = cv2.imread("test.png")
-    print(image.shape)
+
     # Define the target color and color range
     target_color = (cutoffB, cutoffG, cutoffR)  # OpenCV order of colors is BGR
     # Calculate the percentage of the image that is within the color range of the target
@@ -30,10 +31,9 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
     cv2.imwrite('mask.png', mask)  # Save mask for testing
     num_pixels = image.shape[0] * image.shape[1]
     print("Pixelnumber: " + str(num_pixels))
-    print(image.shape[0], image.shape[1])
+
     target_pixels = cv2.countNonZero(mask)
-    print(mask)
-    print(target_pixels)
+
     percentage = (target_pixels / num_pixels) * 100
 
     return percentage
@@ -43,7 +43,7 @@ def showImagesFromStack(stack, framerate, defaultFrame = 0):
     fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=500)
     if cols >> 1:
         for i in range(cols):
-            im = stack[i*framerate]
+            im = stack[1 + i*framerate]
             axes[i].imshow(im)
             axes[i].axis('off')
     else:
@@ -54,22 +54,25 @@ def showImagesFromStack(stack, framerate, defaultFrame = 0):
     #fig.savefig('test.png')
 
 def substractDust(stack):
-    dust = stack[0]
-    dust[dust < 250] = 0
-    subStack = np.subtract(stack, dust)
+    subStack = [[] for i in range(len(stack))]
+    for i in range(len(stack)):
+        dust = stack[i][0]
+        dust[dust < 250] = 0
+        subtracted = np.subtract(stack[i], dust)
+        subStack[i] = subtracted
 
     return subStack
 
 
 def crop(x, x1, y, y1):
     global cropped_stack
-    cropped_stack = imageStack[:,y:y1, x:x1]
-
+    for i in range(len(cropped_stack)):
+        cropped_stack[i] = imageStack[i][:,y:y1, x:x1]
+    print(len((cropped_stack[0])))
 
 # Mouse callback function
 def draw_rectangle(event, x, y, flags, param):
     global start_point, end_point, drawing, image
-    cropped_stack = None
     # When the left mouse button is pressed, record the starting point
     if event == cv2.EVENT_LBUTTONDOWN:
         drawing = True
@@ -92,15 +95,15 @@ def draw_rectangle(event, x, y, flags, param):
 
         # Print the coordinates of the rectangle
         print(f"Rectangle coordinates: {start_point} to {end_point}")
-        print(start_point[0], end_point[1])
         crop(start_point[0], end_point[0], start_point[1], end_point[1])
 
 def cropper(img, imgStack):
     # Create a window and set the mouse callback
-    global image, imageStack
+    global image, imageStack, cropped_stack
     cv2.namedWindow("Image Cropper")
     image = img
     imageStack = imgStack
+    cropped_stack = [[] for i in range(len(imgStack))]
     cv2.setMouseCallback("Image Cropper", draw_rectangle)
 
     while True:

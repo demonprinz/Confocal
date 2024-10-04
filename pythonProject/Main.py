@@ -10,7 +10,6 @@ import stacking
 import analyze
 import promptlib
 import os
-import cv2
 
 # read image files
 
@@ -35,10 +34,11 @@ imgList = stacking.imageLists(stacking.imagePaths(channels, imgDirectory))
 #stacking the images
 imgStack = stacking.stackingImages(imgList)
 
-
-#print(imgStack[0].shape[0])
-#analyze.showImagesFromStack(imgStack[0], imgStack[0].shape[0], defaultFrame= 300)
-subStack = analyze.substractDust(imgStack[0])
+subStack = analyze.substractDust(imgStack)
 #get stacked images of the catalyst area only
-cropped_stack= analyze.cropper(subStack[1], subStack)
-print(analyze.getArea(cropped_stack[140], 0,130,0))
+
+cropped_stack= analyze.cropper(subStack[0][1], subStack)
+print(analyze.getArea(cropped_stack[0][140], 0,130,0))
+analyze.showImagesFromStack(cropped_stack[0], 100, 140)
+analyze.showImagesFromStack(cropped_stack[1], 100, 140)
+

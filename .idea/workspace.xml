@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="Cropping the area of the whole stack works">
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="returning the cropped stack to main">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/analyze.py" afterDir="false" />
     </list>
@@ -158,8 +159,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.22855.92" />
-        <option value="bundled-python-sdk-b068d85d1acf-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.22855.92" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
+        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
       </set>
     </attachedChunks>
   </component>
@@ -187,6 +188,7 @@
       <workItem from="1727681325193" duration="3474000" />
       <workItem from="1727747630967" duration="3627000" />
       <workItem from="1727854855978" duration="4680000" />
+      <workItem from="1727998335916" duration="4958000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of myin python file">
       <option name="closed" value="true" />
@@ -380,7 +382,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727897024707</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="returning the cropped stack to main">
+      <option name="closed" value="true" />
+      <created>1727897692330</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1727897692330</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -410,11 +420,23 @@
     <MESSAGE value="refactored the method to get catalyst coordinates" />
     <MESSAGE value="placed the cropping call in analyze instead of holding it in main. works with single images" />
     <MESSAGE value="Cropping the area of the whole stack works" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cropping the area of the whole stack works" />
+    <MESSAGE value="returning the cropped stack to main" />
+    <option name="LAST_COMMIT_MESSAGE" value="returning the cropped stack to main" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pythonProject/analyze.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Confocal$teststuff.coverage" NAME="teststuff Coverage Results" MODIFIED="1727678707813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
-    <SUITE FILE_PATH="coverage/Confocal$Main.coverage" NAME="Main Coverage Results" MODIFIED="1727897339334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
+    <SUITE FILE_PATH="coverage/Confocal$Main.coverage" NAME="Main Coverage Results" MODIFIED="1728003324883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$stacking.coverage" NAME="stacking Coverage Results" MODIFIED="1727475888248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$test.coverage" NAME="test Coverage Results" MODIFIED="1727748909089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$GUI.coverage" NAME="GUI Coverage Results" MODIFIED="1727683526957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
