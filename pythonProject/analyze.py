@@ -17,18 +17,20 @@ drawing = False
 image = None
 imageStack = None
 cropped_stack = None
-
+index = 0
 
 def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
     #image = cv2.imread("test.png")
-
+    global index
     # Define the target color and color range
     target_color = (cutoffB, cutoffG, cutoffR)  # OpenCV order of colors is BGR
     # Calculate the percentage of the image that is within the color range of the target
     lower_bound = np.clip(np.array(target_color) - color_rangelower, 0, 255)
     upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
     mask = cv2.inRange(image, lower_bound, upper_bound)
-    #cv2.imwrite('mask.png', mask)  # Save mask for testing
+
+    #cv2.imwrite('C:\\Users\\schol\\sciebo - Scholz, Patrick Alexander (82HPQ9@rwth-aachen.de)@rwth-aachen.sciebo.de\\AVT Praktikum\\Series013\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
+    index += 1
     num_pixels = image.shape[0] * image.shape[1]
     #print("Pixelnumber: " + str(num_pixels))
 
@@ -98,17 +100,17 @@ def draw_rectangle(event, x, y, flags, param):
         cv2.imshow("Image Cropper", image)
         point1 = list(start_point)
         point2 = list(end_point)
-        if point1[1] >> point2[1]:
-            print("test1")
+        if point1[1] > point2[1]:
+
             value = point1[1]
             point1 = [point1[0], point2[1]]
             point2 = [point2[0], value]
             start_point = tuple(point1)
             end_point = tuple(point2)
 
-        if start_point[0] >> end_point[0]:
+        if start_point[0] > end_point[0]:
             print("test2")
-            value = point1[1]
+            value = point1[0]
             point1 = [point2[0], point1[1]]
             point2 = [value, point2[1]]
             start_point = tuple(point1)
