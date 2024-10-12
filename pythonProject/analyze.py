@@ -8,6 +8,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+import tkinter as tk
 
 
 # Global variables to store the coordinates
@@ -18,6 +19,9 @@ image = None
 imageStack = None
 cropped_stack = None
 index = 0
+frametime = 1
+
+
 
 def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
     #image = cv2.imread("test.png")
@@ -29,7 +33,7 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
     upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
     mask = cv2.inRange(image, lower_bound, upper_bound)
 
-    #cv2.imwrite('C:\\Users\\schol\\sciebo - Scholz, Patrick Alexander (82HPQ9@rwth-aachen.de)@rwth-aachen.sciebo.de\\AVT Praktikum\\Series013\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
+    cv2.imwrite('C:\\Users\\schol\\Documents\\AVT\\04_Experimentals\\20240903-pasc10\\Series012\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
     index += 1
     num_pixels = image.shape[0] * image.shape[1]
     #print("Pixelnumber: " + str(num_pixels))
@@ -147,3 +151,28 @@ def areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color
         areaList.append(getArea(imageStack[i], cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper))
 
     return areaList
+
+def output(imageStack, cutoffB = 0, cutoffG = 130, cutoffR = 0, color_rangelower = 45, color_rangeupper = 250):
+    xValues = [frametime * i for i in range(imageStack.shape[0])]
+    areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
+    plt.plot(xValues, areaValues)
+    plt.xticks(np.arange(0, len(areaValues)*frametime, 30))
+    plt.xlabel('time [s]')
+    plt.ylabel('active area [%]')
+    plt.show()
+
+def userInput():
+    master = tk.Tk()
+    e = tk.Entry(master)
+    e.pack()
+
+    e.focus_set()
+
+    def callback():
+        print(e.get())  # This is the text you may want to use later
+        master.quit()
+
+    b = tk.Button(master, text="OK", width=10, command=callback)
+    b.pack()
+
+    e.mainloop()
