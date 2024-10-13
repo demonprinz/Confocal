@@ -1,5 +1,11 @@
 import xml.etree.ElementTree as ET
 import os
+import csv
+import itertools
+import datetime
+
+from matplotlib.backend_bases import NonGuiException
+
 
 def getFrameTime(datapath):
    #find properties file
@@ -21,6 +27,49 @@ def getFrameTime(datapath):
    frametime = float(frametimeStr[:-2])
    return frametime
 
+def getTimeDifference(metapath, echempath):
+   #find properties file
+   startConf = None
+   startEchem = None
+
+   for root, dirs, files in os.walk(metapath):
+      for file in files:
+         if not file.endswith('Properties.xml'):
+            continue
+         metadatapath = (os.path.join(root, file))
+
+   root = ET.parse(metadatapath).getroot()
+   for type_tag in root.findall('./Image/ImageDescription'):
+      for child in type_tag:
+         if child.tag == "StartTime":
+            startConf = child.text
+
+   with open(echempath) as tsv:
+      for line in csv.reader(tsv, dialect="excel-tab"):
+         if line[0] == "DATE":
+            startEchem = line[2]
+         if line[0] == "TIME":
+            startEchem = startEchem + " " + line[2]
+
+   timeStartConf = datetime.datetime.strptime(startConf, "%m/%d/%Y %I:%M:%S.%f %p")
+   timeStartEchem = datetime.datetime.strptime(startEchem, "%d.%m.%Y %H:%M:%S")
+
+   timeDiff = timeStartEchem - timeStartConf
+   return timeDiff.total_seconds()
 
 
+def getElectricData(filepath):
+   data = []
+   returnList = []
+   with open(filepath) as tsv:
+      for line in csv.reader(tsv, dialect="excel-tab"):
+         if line[0] == "" and len(line) > 2:
+            data.append(line)
+   returnList = (list(map(list, itertools.zip_longest(*data, fillvalue=None)))[1:])
 
+   with open(filepath) as tsv:
+      for line in csv.reader(tsv, dialect="excel-tab"):
+         if line[0] == "TAG":
+            returnList.insert(0, line[1])
+
+   return returnList

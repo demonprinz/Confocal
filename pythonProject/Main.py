@@ -25,8 +25,18 @@ imgDirectory = os.fspath(imgFolderPath)
 
 #get frametime
 analyze.frametime = metahandler.getFrameTime(imgFolderPath)
+
+#get echemdata
+promter2 = promptlib.Files()
+echemDataPath = promter2.file()
+
+echemData = metahandler.getElectricData(echemDataPath)
+analyze.timeDiff = metahandler.getTimeDifference(imgFolderPath, echemDataPath)
+
+
 #create list into which the image get sorted by channel
 channels = [[] for i in range(stacking.getNumberOfChannels(imgDirectory))]
+
 
 #sorting images into the channels List
 channels = stacking.sortFilenames(imgDirectory, channels)
@@ -47,4 +57,5 @@ analyze.showImagesFromStack(cropped_stack[0], 100, 140)
 
 
 analyze.output(cropped_stack[0])
+analyze.outputWithEchem(cropped_stack[0], echemData = echemData)
 

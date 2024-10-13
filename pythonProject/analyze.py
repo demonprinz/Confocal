@@ -20,6 +20,7 @@ imageStack = None
 cropped_stack = None
 index = 0
 frametime = 1
+timeDiff = 0
 
 
 
@@ -157,8 +158,44 @@ def output(imageStack, cutoffB = 0, cutoffG = 130, cutoffR = 0, color_rangelower
     areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
     plt.plot(xValues, areaValues)
     plt.xticks(np.arange(0, len(areaValues)*frametime, 30))
+
     plt.xlabel('time [s]')
     plt.ylabel('active area [%]')
+    plt.show()
+
+
+def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45, color_rangeupper=250, echemData=None):
+    xValuesImageStack = [frametime * i for i in range(imageStack.shape[0])]
+    areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
+    label = "test"
+    if echemData is not None:
+        ydata = []
+        xdata = [int(i)+timeDiff for i in echemData[2][2:]]
+        match echemData[0]:
+            case "GALVANOSTATIC":
+                for i in echemData[3][2:]:
+                    ydata.append(float(i.replace(',', '.')))
+
+                    label = "Voltage [V vs V ref]"
+            case "POTENTIOSTATIC":
+                for i in echemData[4][2:]:
+                    ydata.append(float(i.replace(',', '.')))
+                    label = "Current [A]"
+
+    fig, ax1 = plt.subplots()
+    color = 'tab:red'
+    ax1.set_xlabel('time [s]')
+    ax1.set_ylabel('active area [%]', color=color)
+    ax1.plot(xValuesImageStack, areaValues, color=color)
+    ax1.tick_params(axis='y', labelcolor=color)
+    ax1.tick_params(axis = 'x', pad = 30)
+    ax2 = ax1.twinx()
+    color = 'tab:blue'
+    ax2.set_ylabel(label, color=color)
+    ax2.plot(xdata, ydata, color=color)
+    ax2.tick_params(axis='y', labelcolor=color)
+
+    fig.tight_layout()
     plt.show()
 
 def userInput():
