@@ -34,7 +34,7 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
     upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
     mask = cv2.inRange(image, lower_bound, upper_bound)
 
-    cv2.imwrite('C:\\Users\\schol\\Documents\\AVT\\04_Experimentals\\20240903-pasc10\\Series012\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
+    cv2.imwrite('C:\\Users\\schol\\Documents\\AVT\\04_Experimentals\\20240903-pasc10\\Series003\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
     index += 1
     num_pixels = image.shape[0] * image.shape[1]
     #print("Pixelnumber: " + str(num_pixels))
@@ -75,7 +75,7 @@ def crop(x, x1, y, y1):
     global cropped_stack
     for i in range(len(cropped_stack)):
         cropped_stack[i] = imageStack[i][:,y:y1, x:x1]
-    print(len((cropped_stack[0])))
+
 
 # Mouse callback function
 def draw_rectangle(event, x, y, flags, param):
@@ -122,7 +122,7 @@ def draw_rectangle(event, x, y, flags, param):
             end_point = tuple(point2)
 
         # Print the coordinates of the rectangle
-        print(f"Rectangle coordinates: {start_point} to {end_point}")
+        # print(f"Rectangle coordinates: {start_point} to {end_point}")
         crop(start_point[0], end_point[0], start_point[1], end_point[1])
 
 def cropper(img, imgStack):
