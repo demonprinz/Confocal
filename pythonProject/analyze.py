@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 import cv2
 import tkinter as tk
 
-
 # Global variables to store the coordinates
 start_point = None
 end_point = None
@@ -179,8 +178,8 @@ def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelo
                     label = "Voltage [V vs V ref]"
             case "POTENTIOSTATIC":
                 for i in echemData[4][2:]:
-                    ydata.append(float(i.replace(',', '.')))
-                    label = "Current [A]"
+                    ydata.append(float(i.replace(',', '.'))*1000000)
+                    label = "Current ["+ r'$\mu$' +"A]"
 
     fig, ax1 = plt.subplots()
     color = 'tab:red'
@@ -213,3 +212,31 @@ def userInput():
     b.pack()
 
     e.mainloop()
+
+
+def histogram(imageStack, percentile = 0.5):
+
+    histogramColorsList = []
+    cutoffs =[]
+    # tuple to select colors of each channel line
+    colors = ("red", "green", "blue")
+    histogram = np.zeros(256, dtype=int)
+    # create the histogram value list, with three lists, one for each color
+    for channel_id, color in enumerate(colors):
+        for i in range(imageStack.shape[0]):
+            histogramvalue, bin_edges = np.histogram(
+                imageStack[i][:, :, channel_id], bins=256, range=(0, 256)
+            )
+            histogram += histogramvalue
+        histogramColorsList.append(histogram)
+        histogram = np.zeros(256, dtype=int)
+
+    for i in range(3):
+        value = 0
+        for j in range(256):
+            if value >= np.sum(histogramColorsList[i])*percentile:
+                cutoffs.append(j-1)
+                break
+            value += histogramColorsList[i][j]
+
+    return cutoffs

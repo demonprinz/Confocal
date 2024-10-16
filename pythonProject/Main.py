@@ -11,6 +11,7 @@ import analyze
 import promptlib
 import os
 import metahandler
+from pythonProject.analyze import histogram
 
 # read image files
 
@@ -51,8 +52,8 @@ subStack = analyze.substractDust(imgStack)
 #get stacked images of the catalyst area only
 
 cropped_stack= analyze.cropper(subStack[0][int(len(subStack[0])/2)], subStack)
-# print(analyze.getArea(cropped_stack[0][140], 0,130,0))
-analyze.showImagesFromStack(cropped_stack[0], 100, 140)
 
-analyze.outputWithEchem(cropped_stack[0], cutoffG=140, color_rangelower= 60, echemData = echemData)
+#analyze.showImagesFromStack(cropped_stack[0], 100, 140)
+cutoffs = analyze.histogram(cropped_stack[0], 0.75)
+analyze.outputWithEchem(cropped_stack[0], cutoffB= cutoffs[0], cutoffG= cutoffs[1], cutoffR= cutoffs[2], color_rangelower= 0, echemData = echemData)
 
