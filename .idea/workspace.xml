@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="minor changes to cropping. it now loads an image from the middle of the stack since it's usually brighter">
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="dynamicly setting cutoffs to a user defined percentile above which the brightness needs to be to become a white pixel in the mask">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/analyze.py" afterDir="false" />
@@ -198,7 +198,7 @@
       <workItem from="1728575863087" duration="24890000" />
       <workItem from="1728837410989" duration="4201000" />
       <workItem from="1728922925704" duration="1863000" />
-      <workItem from="1729093840092" duration="6455000" />
+      <workItem from="1729093840092" duration="13399000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of myin python file">
       <option name="closed" value="true" />
@@ -464,14 +464,21 @@
       <option name="project" value="LOCAL" />
       <updated>1728924793427</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="dynamicly setting cutoffs to a user defined percentile above which the brightness needs to be to become a white pixel in the mask">
+      <option name="closed" value="true" />
+      <created>1729100726616</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1729100726616</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Reworked sorting the images by channels" />
     <MESSAGE value="Renamed sortNew to sort" />
     <MESSAGE value="update main after merge with ReworkLists" />
     <MESSAGE value="testing imaging the stack, nothing major to last commit." />
@@ -496,7 +503,8 @@
     <MESSAGE value="scaling of the area plot is now in time not frames. Metadata need to be in the same or any subfolder of the image data and end with Properties.xml" />
     <MESSAGE value="Shift graphs to the correct time by the chosen metadata works" />
     <MESSAGE value="minor changes to cropping. it now loads an image from the middle of the stack since it's usually brighter" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor changes to cropping. it now loads an image from the middle of the stack since it's usually brighter" />
+    <MESSAGE value="dynamicly setting cutoffs to a user defined percentile above which the brightness needs to be to become a white pixel in the mask" />
+    <option name="LAST_COMMIT_MESSAGE" value="dynamicly setting cutoffs to a user defined percentile above which the brightness needs to be to become a white pixel in the mask" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -512,7 +520,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Confocal$teststuff.coverage" NAME="teststuff Coverage Results" MODIFIED="1727678707813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$metahandler.coverage" NAME="metahandler Coverage Results" MODIFIED="1728839320407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
-    <SUITE FILE_PATH="coverage/Confocal$Main.coverage" NAME="Main Coverage Results" MODIFIED="1729100271051" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
+    <SUITE FILE_PATH="coverage/Confocal$Main.coverage" NAME="Main Coverage Results" MODIFIED="1729107299942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$stacking.coverage" NAME="stacking Coverage Results" MODIFIED="1727475888248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$analyze.coverage" NAME="analyze Coverage Results" MODIFIED="1729095472092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$test.coverage" NAME="test Coverage Results" MODIFIED="1727748909089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />

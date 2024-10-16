@@ -33,7 +33,7 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
     upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
     mask = cv2.inRange(image, lower_bound, upper_bound)
 
-    cv2.imwrite('C:\\Users\\schol\\Documents\\AVT\\04_Experimentals\\20240903-pasc10\\Series003\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
+    #cv2.imwrite('C:\\Users\\schol\\Documents\\AVT\\04_Experimentals\\20240903-pasc10\\Series003\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
     index += 1
     num_pixels = image.shape[0] * image.shape[1]
     #print("Pixelnumber: " + str(num_pixels))
@@ -214,7 +214,7 @@ def userInput():
     e.mainloop()
 
 
-def histogram(imageStack, percentile = 0.5):
+def histogram(imageStack, percentile = 0.75):
 
     histogramColorsList = []
     cutoffs =[]
@@ -240,3 +240,24 @@ def histogram(imageStack, percentile = 0.5):
             value += histogramColorsList[i][j]
 
     return cutoffs
+
+def activity(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45, color_rangeupper=250, echemData=None):
+    #currentdensity per active area is the idea
+    areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
+    if echemData is not None:
+        ydata = []
+        xdata = []
+
+        for i in echemData[4][2:]:
+            ydata.append(float(i.replace(',', '.')) * 1000000)
+        for i in echemData[3][2:]:
+            xdata.append(float(i.replace(',', '.')))
+
+    relevantAreaList = areaValues[int(timeDiff/frametime):int(len(ydata)+timeDiff/frametime)]
+    currPerArea = [i / j for i, j in zip(ydata, relevantAreaList)]
+    plt.plot(currPerArea)
+    plt.xticks(np.arange(0, len(ydata)+1, 30))
+
+    plt.xlabel('time [s]')
+    plt.ylabel('Current per active area [' + r'$\mu$' + "A/$Area_{\%}$]")
+    plt.show()
