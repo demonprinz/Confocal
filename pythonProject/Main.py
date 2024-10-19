@@ -20,12 +20,14 @@ prompter = promptlib.Files()
 
 #write path into string
 imgFolderPath = prompter.dir()
+analyze.path = imgFolderPath
 
 #create directory object
 imgDirectory = os.fspath(imgFolderPath)
 
 #get frametime
-analyze.frametime = metahandler.getFrameTime(imgFolderPath)
+metahandler.getVoxelDimensions(imgFolderPath)
+analyze.frametime = metahandler.voxelDim.get("T")
 
 #get echemdata
 promter2 = promptlib.Files()
@@ -57,3 +59,4 @@ cropped_stack= analyze.cropper(subStack[0][int(len(subStack[0])/2)], subStack)
 cutoffs = analyze.histogram(cropped_stack[0], 0.75)
 analyze.outputWithEchem(cropped_stack[0], cutoffB= cutoffs[0], cutoffG= cutoffs[1], cutoffR= cutoffs[2], color_rangelower= 0, echemData = echemData)
 analyze.activity(cropped_stack[0], cutoffB= cutoffs[0], cutoffG= cutoffs[1], cutoffR= cutoffs[2], color_rangelower= 0, echemData = echemData)
+print(metahandler.voxelDim)

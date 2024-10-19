@@ -20,7 +20,7 @@ cropped_stack = None
 index = 0
 frametime = 1
 timeDiff = 0
-
+path = ""
 
 
 def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
@@ -33,7 +33,7 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
     upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
     mask = cv2.inRange(image, lower_bound, upper_bound)
 
-    #cv2.imwrite('C:\\Users\\schol\\Documents\\AVT\\04_Experimentals\\20240903-pasc10\\Series003\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
+    cv2.imwrite(path + '\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
     index += 1
     num_pixels = image.shape[0] * image.shape[1]
     #print("Pixelnumber: " + str(num_pixels))
@@ -113,7 +113,6 @@ def draw_rectangle(event, x, y, flags, param):
             end_point = tuple(point2)
 
         if start_point[0] > end_point[0]:
-            print("test2")
             value = point1[0]
             point1 = [point2[0], point1[1]]
             point2 = [value, point2[1]]
@@ -196,6 +195,8 @@ def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelo
 
     fig.tight_layout()
     plt.show()
+    fig.savefig(path + '\\plots\\plotAreaAndEchem.png')  # Save mask for testing
+
 
 def userInput():
     master = tk.Tk()
@@ -260,4 +261,6 @@ def activity(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45,
 
     plt.xlabel('time [s]')
     plt.ylabel('Current per active area [' + r'$\mu$' + "A/$Area_{\%}$]")
+
+    plt.savefig(path + '\\plots\\plotActivity.png')  # Save mask for testing
     plt.show()

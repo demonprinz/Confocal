@@ -3,11 +3,11 @@ import os
 import csv
 import itertools
 import datetime
-
 from matplotlib.backend_bases import NonGuiException
 
+voxelDim= {}
 
-def getFrameTime(datapath):
+def getVoxelDimensions(datapath):
    #find properties file
    frametime = 1
    frametimeStr = None
@@ -20,12 +20,14 @@ def getFrameTime(datapath):
 
    root = ET.parse(metadatapath).getroot()
    for type_tag in root.findall('Image/ImageDescription/Dimensions/DimensionDescription'):
+      voxelDim[type_tag.get('DimID')] = type_tag.get('Voxel')
       value = type_tag.get('DimID')
       if value == "T":
-         frametimeStr =  (type_tag.get('Voxel'))
+         voxelDim[type_tag.get('DimID')] = type_tag.get('Voxel')[:-2]
 
-   frametime = float(frametimeStr[:-2])
-   return frametime
+   for i, j in voxelDim.items():
+      voxelDim[i] = float(j)
+
 
 def getTimeDifference(metapath, echempath):
    #find properties file
