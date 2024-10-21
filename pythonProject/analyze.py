@@ -151,9 +151,10 @@ def output(imageStack, cutoffB = 0, cutoffG = 130, cutoffR = 0, color_rangelower
     areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
     plt.plot(xValues, areaValues)
     plt.xticks(np.arange(0, len(areaValues)*voxelDim.get("T"), 30))
-
+    plt.xlim(0, len(ydata)+1)
     plt.xlabel('time [s]')
     plt.ylabel('active area [%]')
+    plt.title("Active area over time")
     plt.show()
 
 
@@ -177,11 +178,13 @@ def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelo
 
     fig, ax1 = plt.subplots()
     color = 'tab:red'
-    ax1.set_xlabel('time [s]')
+    ax1.set_xlabel('time [s]', labelpad=5)
     ax1.set_ylabel('active area [%]', color=color)
     ax1.plot(xValuesImageStack, areaValues, color=color)
     ax1.tick_params(axis='y', labelcolor=color)
-    ax1.tick_params(axis = 'x', pad = 30)
+    ax1.tick_params(axis = 'x', pad = 10)
+    ax1.set_xlim(0, len(areaValues)*voxelDim.get("T")+1)
+    ax1.set_title("Active area and electrochemical data over time")
     ax2 = ax1.twinx()
     color = 'tab:blue'
     ax2.set_ylabel(label, color=color)
@@ -189,9 +192,10 @@ def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelo
     ax2.tick_params(axis='y', labelcolor=color)
 
     fig.tight_layout()
+
     plt.show()
 
-    fig.savefig(path + '\\plots\\plotAreaAndEchem.png')  # Save mask for testing
+    fig.savefig(path + '\\plots\\plotAreaAndEchem.png', bbox_inches='tight')  # Save mask for testing
 
 
 def userInput():
@@ -250,17 +254,21 @@ def activity(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45,
 
     for i in echemData[4][2:]:
         ydata.append(float(i.replace(',', '.')) * 1000000000)
-    for i in echemData[3][2:]:
-        xdata.append(float(i.replace(',', '.')))
+    # for i in echemData[3][2:]:
+    #     xdata.append(float(i.replace(',', '.')))
 
     relevantAreaList = areaValues[int(timeDiff/voxelDim.get("T"))+1:int(len(ydata)+timeDiff/voxelDim.get("T"))]
 
+    xdata = [i*voxelDim.get("T") for i in range(len(relevantAreaList))]
     currPerArea = [i / j for i, j in zip(ydata, relevantAreaList)]
-    plt.plot(currPerArea)
+    plt.plot(xdata, currPerArea)
     plt.xticks(np.arange(0, len(ydata)+1, 30))
-
+    plt.tick_params(axis = "x",  pad = 10)
+    plt.xlim(0, len(ydata)+1)
+    plt.gca().invert_yaxis()
     plt.xlabel('time [s]')
     plt.ylabel('Current per active area [mA$mm^{-2}$'+"]")
+    plt.title("Activity of the catalyst")
 
-    plt.savefig(path + '\\plots\\plotActivity.png')  # Save mask for testing
+    plt.savefig(path + '\\plots\\plotActivity.png', bbox_inches='tight')  # Save mask for testing
     plt.show()
