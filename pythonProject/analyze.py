@@ -18,7 +18,7 @@ image = None
 imageStack = None
 cropped_stack = None
 index = 0
-frametime = 1
+voxelDim = None
 timeDiff = 0
 path = ""
 
@@ -36,7 +36,6 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
     cv2.imwrite(path + '\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
     index += 1
     num_pixels = image.shape[0] * image.shape[1]
-    #print("Pixelnumber: " + str(num_pixels))
 
     target_pixels = cv2.countNonZero(mask)
 
@@ -78,9 +77,6 @@ def crop(x, x1, y, y1):
 
 # Mouse callback function
 def draw_rectangle(event, x, y, flags, param):
-    # Rectangle coordinates: (164, 453) to (858, 114)
-    #Rectangle coordinates: (861, 442) to (162, 114)
-    # Rectangle coordinates: (168, 114) to (860, 447)
 
     global start_point, end_point, drawing, image
     # When the left mouse button is pressed, record the starting point
@@ -119,8 +115,6 @@ def draw_rectangle(event, x, y, flags, param):
             start_point = tuple(point1)
             end_point = tuple(point2)
 
-        # Print the coordinates of the rectangle
-        # print(f"Rectangle coordinates: {start_point} to {end_point}")
         crop(start_point[0], end_point[0], start_point[1], end_point[1])
 
 def cropper(img, imgStack):
@@ -145,17 +139,18 @@ def cropper(img, imgStack):
     return cropped_stack
 
 def areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
+    global index
     areaList = []
     for i in range(imageStack.shape[0]):
         areaList.append(getArea(imageStack[i], cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper))
-
+    index = 0
     return areaList
 
 def output(imageStack, cutoffB = 0, cutoffG = 130, cutoffR = 0, color_rangelower = 45, color_rangeupper = 250):
-    xValues = [frametime * i for i in range(imageStack.shape[0])]
+    xValues = [voxelDim.get("T") * i for i in range(imageStack.shape[0])]
     areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
     plt.plot(xValues, areaValues)
-    plt.xticks(np.arange(0, len(areaValues)*frametime, 30))
+    plt.xticks(np.arange(0, len(areaValues)*voxelDim.get("T"), 30))
 
     plt.xlabel('time [s]')
     plt.ylabel('active area [%]')
@@ -163,7 +158,7 @@ def output(imageStack, cutoffB = 0, cutoffG = 130, cutoffR = 0, color_rangelower
 
 
 def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45, color_rangeupper=250, echemData=None):
-    xValuesImageStack = [frametime * i for i in range(imageStack.shape[0])]
+    xValuesImageStack = [voxelDim.get("T") * i for i in range(imageStack.shape[0])]
     areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
     label = "test"
     if echemData is not None:
@@ -195,6 +190,7 @@ def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelo
 
     fig.tight_layout()
     plt.show()
+
     fig.savefig(path + '\\plots\\plotAreaAndEchem.png')  # Save mask for testing
 
 
@@ -232,6 +228,7 @@ def histogram(imageStack, percentile = 0.75):
         histogramColorsList.append(histogram)
         histogram = np.zeros(256, dtype=int)
 
+
     for i in range(3):
         value = 0
         for j in range(256):
@@ -244,23 +241,26 @@ def histogram(imageStack, percentile = 0.75):
 
 def activity(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45, color_rangeupper=250, echemData=None):
     #currentdensity per active area is the idea
-    areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
-    if echemData is not None:
-        ydata = []
-        xdata = []
+    areaPercentageValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
+    percentageArray = np.array(areaPercentageValues)
+    areaValues = ((percentageArray/100)*(imageStack.shape[2]*voxelDim.get("X")*imageStack.shape[1]*voxelDim.get("Y"))).tolist()
 
-        for i in echemData[4][2:]:
-            ydata.append(float(i.replace(',', '.')) * 1000000)
-        for i in echemData[3][2:]:
-            xdata.append(float(i.replace(',', '.')))
+    ydata = []
+    xdata = []
 
-    relevantAreaList = areaValues[int(timeDiff/frametime):int(len(ydata)+timeDiff/frametime)]
+    for i in echemData[4][2:]:
+        ydata.append(float(i.replace(',', '.')) * 1000000000)
+    for i in echemData[3][2:]:
+        xdata.append(float(i.replace(',', '.')))
+
+    relevantAreaList = areaValues[int(timeDiff/voxelDim.get("T"))+1:int(len(ydata)+timeDiff/voxelDim.get("T"))]
+
     currPerArea = [i / j for i, j in zip(ydata, relevantAreaList)]
     plt.plot(currPerArea)
     plt.xticks(np.arange(0, len(ydata)+1, 30))
 
     plt.xlabel('time [s]')
-    plt.ylabel('Current per active area [' + r'$\mu$' + "A/$Area_{\%}$]")
+    plt.ylabel('Current per active area [mA$mm^{-2}$'+"]")
 
     plt.savefig(path + '\\plots\\plotActivity.png')  # Save mask for testing
     plt.show()

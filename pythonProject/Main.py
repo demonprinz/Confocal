@@ -27,7 +27,8 @@ imgDirectory = os.fspath(imgFolderPath)
 
 #get frametime
 metahandler.getVoxelDimensions(imgFolderPath)
-analyze.frametime = metahandler.voxelDim.get("T")
+analyze.voxelDim = metahandler.voxelDim
+
 
 #get echemdata
 promter2 = promptlib.Files()
