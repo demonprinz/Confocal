@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="scaling the plots and changing up display parameters">
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="First attempt to plot difference in area covered by the second dye vs the first one">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/analyze.py" afterDir="false" />
@@ -203,7 +203,9 @@
       <workItem from="1729351870840" duration="1012000" />
       <workItem from="1729519803472" duration="13171000" />
       <workItem from="1730215269080" duration="8826000" />
-      <workItem from="1730254532965" duration="2432000" />
+      <workItem from="1730254532965" duration="4887000" />
+      <workItem from="1730285766151" duration="704000" />
+      <workItem from="1730286675484" duration="13078000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of myin python file">
       <option name="closed" value="true" />
@@ -509,14 +511,21 @@
       <option name="project" value="LOCAL" />
       <updated>1729533840594</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="First attempt to plot difference in area covered by the second dye vs the first one">
+      <option name="closed" value="true" />
+      <created>1730257084422</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1730257084422</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="split up Confocal_main.py into stacking.py and Main.py which should work properly" />
     <MESSAGE value="Reworking the split up because shit happened" />
     <MESSAGE value="pushing prior changes from before failed merge into main" />
     <MESSAGE value="start writing analyze.py. Displaying an Image stack using a variable frame rate" />
@@ -541,14 +550,15 @@
     <MESSAGE value="introducing voxel dimension dictionary.&#10;TODO: refactor frametime variable and calculate actual area" />
     <MESSAGE value="getting exact area for calculating activity works" />
     <MESSAGE value="scaling the plots and changing up display parameters" />
-    <option name="LAST_COMMIT_MESSAGE" value="scaling the plots and changing up display parameters" />
+    <MESSAGE value="First attempt to plot difference in area covered by the second dye vs the first one" />
+    <option name="LAST_COMMIT_MESSAGE" value="First attempt to plot difference in area covered by the second dye vs the first one" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pythonProject/analyze.py</url>
-          <line>64</line>
+          <line>66</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -557,7 +567,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Confocal$teststuff.coverage" NAME="teststuff Coverage Results" MODIFIED="1727678707813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$metahandler.coverage" NAME="metahandler Coverage Results" MODIFIED="1728839320407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
-    <SUITE FILE_PATH="coverage/Confocal$Main.coverage" NAME="Main Coverage Results" MODIFIED="1730256710837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
+    <SUITE FILE_PATH="coverage/Confocal$Main.coverage" NAME="Main Coverage Results" MODIFIED="1730300162222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$stacking.coverage" NAME="stacking Coverage Results" MODIFIED="1727475888248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$analyze.coverage" NAME="analyze Coverage Results" MODIFIED="1729095472092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$test.coverage" NAME="test Coverage Results" MODIFIED="1727748909089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />

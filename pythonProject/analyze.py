@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 import cv2
 import tkinter as tk
 
+from matplotlib import cm
+
 # Global variables to store the coordinates
 start_point = None
 end_point = None
@@ -294,4 +296,35 @@ def difArea(imageStackDye1, imageStackDye2, quenchingDye1 = False, quenchingDye2
     plt.title("Difference in Area between Dyes showing activity and Electrolyte flow")
 
     plt.savefig(path + '\\plots\\AreaDif.png', bbox_inches='tight')  # Save mask for testing
+    plt.show()
+
+def threeDPixellinePlot(imageStack, pixelline = None, pixelwidth = 2 ):
+    if pixelline is None or (not isinstance(pixelline, (int, float))):
+        line = int(imageStack.shape[2]*(1/3))
+    elif isinstance(pixelline, float):
+        line = int(imageStack.shape[2]*(pixelline))
+    elif isinstance(pixelline, int):
+        line = pixelline
+
+    intensitiesOverTime = np.zeros(shape=(imageStack.shape[0]-1, imageStack.shape[1]))
+    for imageindex in range(imageStack.shape[0]-1):
+        lineIntensities = np.zeros(imageStack.shape[1])
+        for i in range(pixelwidth):
+            lineIntensities += imageStack[imageindex,:,line+i,1]
+        lineIntensities /= pixelwidth
+        lineIntensities = np.flip(lineIntensities, axis = 0)
+        box = np.ones(int(pixelwidth*(2/3))) / int(pixelwidth*(2/3))
+        intensities_smooth = np.convolve(lineIntensities, box, mode='same')/255
+        intensitiesOverTime[imageindex] = intensities_smooth
+
+    x,y = np.meshgrid(np.arange(0, (imageStack.shape[0]-1)), np.arange(0, imageStack.shape[1]))
+    intensitiesOverTime = np.transpose(intensitiesOverTime)
+    fig = plt.figure()
+    ax = plt.axes(projection='3d')
+    surf = ax.plot_surface(x*voxelDim.get("T"), y*voxelDim.get("Y"), intensitiesOverTime, cmap='viridis')
+    ax.set_ylabel('depth ['+ r'$\mu$'+'m]', fontsize=12)
+    ax.set_xlabel('time [s]', fontsize=12)
+    ax.set_zlabel('Intensity I/$I_{max}$', fontsize=12)
+    ax.set_xlim(voxelDim.get("T")*(imageStack.shape[0]-1), 0)
+    ax.set_ylim(0, voxelDim.get("X")*(imageStack.shape[1]))
     plt.show()
