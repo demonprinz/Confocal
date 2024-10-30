@@ -138,11 +138,14 @@ def cropper(img, imgStack):
     cv2.destroyAllWindows()
     return cropped_stack
 
-def areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
+def areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250, quenching = False):
     global index
     areaList = []
     for i in range(imageStack.shape[0]):
-        areaList.append(getArea(imageStack[i], cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper))
+        if quenching:
+            areaList.append(1-(getArea(imageStack[i], cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)))
+        else:
+            areaList.append(getArea(imageStack[i], cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper))
     index = 0
     return areaList
 
@@ -161,7 +164,6 @@ def output(imageStack, cutoffB = 0, cutoffG = 130, cutoffR = 0, color_rangelower
 def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45, color_rangeupper=250, echemData=None):
     xValuesImageStack = [voxelDim.get("T") * i for i in range(imageStack.shape[0])]
     areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
-    label = "test"
     if echemData is not None:
         ydata = []
         xdata = [int(i)+timeDiff for i in echemData[2][2:]]
@@ -259,7 +261,10 @@ def activity(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45,
 
     relevantAreaList = areaValues[int(timeDiff/voxelDim.get("T"))+1:int(len(ydata)+timeDiff/voxelDim.get("T"))]
 
-    xdata = [i*voxelDim.get("T") for i in range(len(relevantAreaList))]
+    if voxelDim.get("T") <= 1:
+        xdata = [i for i in range(len(relevantAreaList))]
+    else:
+        xdata = [i*voxelDim.get("T") for i in range(len(relevantAreaList))]
     currPerArea = [i / j for i, j in zip(ydata, relevantAreaList)]
     plt.plot(xdata, currPerArea)
     plt.xticks(np.arange(0, len(ydata)+1, 30))
@@ -271,4 +276,22 @@ def activity(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45,
     plt.title("Activity of the catalyst")
 
     plt.savefig(path + '\\plots\\plotActivity.png', bbox_inches='tight')  # Save mask for testing
+    plt.show()
+
+def difArea(imageStackDye1, imageStackDye2, quenchingDye1 = False, quenchingDye2 = False, cutoffB1=0, cutoffG1=130, cutoffR1=0, cutoffB2=130, cutoffG2=0, cutoffR2=0, color_rangelower=45, color_rangeupper=250):
+    xValuesImageStack = [voxelDim.get("T") * i for i in range(imageStackDye1.shape[0])]
+    areaValuesDye1 = areaList(imageStackDye1, cutoffB1, cutoffG1, cutoffR1, color_rangelower, color_rangeupper, quenchingDye1)
+    areaValuesDye2 = areaList(imageStackDye2, cutoffB2, cutoffG2, cutoffR2, color_rangelower, color_rangeupper, quenchingDye2)
+    areaDif = [i-j for i,j in zip(areaValuesDye1, areaValuesDye2)]
+
+    plt.plot(xValuesImageStack, areaDif)
+    plt.xticks(np.arange(0, len(areaDif) + 1, 30))
+    plt.tick_params(axis="x", pad=10)
+    plt.xlim(0, len(areaDif) + 1)
+
+    plt.xlabel('time [s]')
+    plt.ylabel('Difference in Area between dyes [%]')
+    plt.title("Difference in Area between Dyes showing activity and Electrolyte flow")
+
+    plt.savefig(path + '\\plots\\AreaDif.png', bbox_inches='tight')  # Save mask for testing
     plt.show()
