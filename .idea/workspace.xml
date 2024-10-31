@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="First attempt to plot difference in area covered by the second dye vs the first one">
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="2D and 3D plotting of intensity moving through a line of pixels works">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pythonProject/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/analyze.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +75,13 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings>
+        <option name="useSoftWraps" value="true" />
+      </console-settings>
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\schol\Documents\GitRepos\Confocal\Confocal\pythonProject" />
@@ -162,8 +168,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
-        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
+        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
       </set>
     </attachedChunks>
   </component>
@@ -206,6 +212,9 @@
       <workItem from="1730254532965" duration="4887000" />
       <workItem from="1730285766151" duration="704000" />
       <workItem from="1730286675484" duration="13078000" />
+      <workItem from="1730300410379" duration="1078000" />
+      <workItem from="1730301839608" duration="7843000" />
+      <workItem from="1730414799524" duration="4146000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of myin python file">
       <option name="closed" value="true" />
@@ -519,15 +528,29 @@
       <option name="project" value="LOCAL" />
       <updated>1730257084422</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="3D Plot of intensity moving through a line of pixels works">
+      <option name="closed" value="true" />
+      <created>1730300853013</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1730300853013</updated>
+    </task>
+    <task id="LOCAL-00041" summary="2D and 3D plotting of intensity moving through a line of pixels works">
+      <option name="closed" value="true" />
+      <created>1730418074832</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1730418074832</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Reworking the split up because shit happened" />
-    <MESSAGE value="pushing prior changes from before failed merge into main" />
     <MESSAGE value="start writing analyze.py. Displaying an Image stack using a variable frame rate" />
     <MESSAGE value="fixing a bug with displaying only a single frame. defaulting to the first frame, frame can be selected by handing an argument to defaultFrame" />
     <MESSAGE value="first idea to remove the brigt dust spots" />
@@ -551,7 +574,9 @@
     <MESSAGE value="getting exact area for calculating activity works" />
     <MESSAGE value="scaling the plots and changing up display parameters" />
     <MESSAGE value="First attempt to plot difference in area covered by the second dye vs the first one" />
-    <option name="LAST_COMMIT_MESSAGE" value="First attempt to plot difference in area covered by the second dye vs the first one" />
+    <MESSAGE value="3D Plot of intensity moving through a line of pixels works" />
+    <MESSAGE value="2D and 3D plotting of intensity moving through a line of pixels works" />
+    <option name="LAST_COMMIT_MESSAGE" value="2D and 3D plotting of intensity moving through a line of pixels works" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -567,7 +592,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Confocal$teststuff.coverage" NAME="teststuff Coverage Results" MODIFIED="1727678707813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$metahandler.coverage" NAME="metahandler Coverage Results" MODIFIED="1728839320407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
-    <SUITE FILE_PATH="coverage/Confocal$Main.coverage" NAME="Main Coverage Results" MODIFIED="1730300162222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
+    <SUITE FILE_PATH="coverage/Confocal$Main.coverage" NAME="Main Coverage Results" MODIFIED="1730416941036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$stacking.coverage" NAME="stacking Coverage Results" MODIFIED="1727475888248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$analyze.coverage" NAME="analyze Coverage Results" MODIFIED="1729095472092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$test.coverage" NAME="test Coverage Results" MODIFIED="1727748909089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />

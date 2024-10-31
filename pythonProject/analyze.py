@@ -321,10 +321,41 @@ def threeDPixellinePlot(imageStack, pixelline = None, pixelwidth = 2 ):
     intensitiesOverTime = np.transpose(intensitiesOverTime)
     fig = plt.figure()
     ax = plt.axes(projection='3d')
-    surf = ax.plot_surface(x*voxelDim.get("T"), y*voxelDim.get("Y"), intensitiesOverTime, cmap='viridis')
+    surf = ax.plot_surface(x*voxelDim.get("T"), y*voxelDim.get("Y"), intensitiesOverTime, cmap=cm.inferno)
     ax.set_ylabel('depth ['+ r'$\mu$'+'m]', fontsize=12)
     ax.set_xlabel('time [s]', fontsize=12)
     ax.set_zlabel('Intensity I/$I_{max}$', fontsize=12)
     ax.set_xlim(voxelDim.get("T")*(imageStack.shape[0]-1), 0)
     ax.set_ylim(0, voxelDim.get("X")*(imageStack.shape[1]))
+    ax.set_zlim(0, np.max(intensitiesOverTime)+0.02)
     plt.show()
+
+def twoDPixellinePlot(imageStack, pixelline=None, pixelwidth=2):
+    if pixelline is None or (not isinstance(pixelline, (int, float))):
+        line = int(imageStack.shape[2] * (1 / 3))
+    elif isinstance(pixelline, float):
+        line = int(imageStack.shape[2] * (pixelline))
+    elif isinstance(pixelline, int):
+        line = pixelline
+
+    intensitiesOverTime = np.zeros(shape=(imageStack.shape[0] - 1, imageStack.shape[1]))
+    for imageindex in range(imageStack.shape[0] - 1):
+        lineIntensities = np.zeros(imageStack.shape[1])
+        for i in range(pixelwidth):
+            lineIntensities += imageStack[imageindex, :, line + i, 1]
+        lineIntensities /= pixelwidth
+        lineIntensities = np.flip(lineIntensities, axis=0)
+        box = np.ones(int(pixelwidth * (2 / 3))) / int(pixelwidth * (2 / 3))
+        intensities_smooth = np.convolve(lineIntensities, box, mode='same') / 255
+        intensitiesOverTime[imageindex] = intensities_smooth
+
+    intensitiesOverTime = np.transpose(intensitiesOverTime)
+    plt.imshow(intensitiesOverTime, extent=[0,imageStack.shape[0]*voxelDim.get("T"),imageStack.shape[1]*voxelDim.get("Y"),0], vmin=0, vmax=1, cmap='inferno')
+    cbar = plt.colorbar()
+    cbar.set_label('Intensity I/$I_{max}$', size=12)
+    plt.gca().invert_yaxis()
+    plt.xlabel("Time [s]")
+    plt.ylabel(r'Y-Axis coordinate [$\mu$m]')
+
+    plt.show()
+
