@@ -64,16 +64,22 @@ for i in range(len(channels)):
 quenching = [False for i in range(len(channels))]
 
 if len(channels) > 2:
-    quenching[3] = True
+    quenching[2] = True
 
 
-areaList = analyze.areaList(cropped_stack, cutoffs, quenching = quenching)
+areaList = analyze.areaList(cropped_stack, cutoffs, quenching = quenching, redo = True)
+
+#####################EVALUATION OF DATA STARTS HERE; FUNCTIONS BELOW HERE CAN BE FREELY COMMENTED OR UNCOMMENTED########################
 
 
 #analyze.showImagesFromStack(cropped_stack[0], 100, 140)
 
-#analyze.outputWithEchem(cropped_stack[0], cutoffB= cutoffs[0][0], cutoffG= cutoffs[0][1], cutoffR= cutoffs[0][2], color_rangelower= 0, echemData = echemData)
-#analyze.activity(cropped_stack[0], cutoffB= cutoffs[0], cutoffG= cutoffs[1], cutoffR= cutoffs[2], color_rangelower= 0, echemData = echemData)
-
-analyze.twoDPixellinePlot(cropped_stack[0], pixelwidth= 5)
-#analyze.difArea(cropped_stack[0], cropped_stack[2], quenchingDye2 = True, cutoffB1= cutoffs[0], cutoffG1= cutoffs[1], cutoffR1= cutoffs[2], cutoffB2= cutoffs2[0], cutoffG2= cutoffs2[1], cutoffR2= cutoffs2[2], color_rangelower= 0)
+# analyze.outputWithEchem(areaList[0], echemData = echemData)
+# analyze.activity(areaList[0], echemData = echemData)
+#
+# analyze.outputWithEchem(areaList[2], echemData = echemData)
+# analyze.activity(areaList[2], echemData = echemData)
+#
+# analyze.twoDPixellinePlot(cropped_stack[0], pixelwidth= 5)
+# analyze.twoDPixellinePlot(cropped_stack[2], pixelwidth= 5)
+# analyze.difArea(areaList[0], areaList[2])

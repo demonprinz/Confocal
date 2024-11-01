@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 import tkinter as tk
-
+import os
 from matplotlib import cm
 
 # Global variables to store the coordinates
@@ -25,20 +25,22 @@ timeDiff = 0
 path = ""
 
 
-def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250, channelstring = None):
+def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250, channelstring = None, redo = False):
     global index
+    if not os.path.isdir(path + '\\masks_' + channelstring):
+        os.mkdir(path + '\\masks_' + channelstring)
 
-    if os.path.exists(path + '\\masks_' + channelstring + '\\mask' + str(index) + '.png'):
+    if os.path.exists(path + '\\masks_' + channelstring + '\\mask' + str(index) + '.png') and not redo:
         mask = cv2.imread(path + '\\masks_' + channelstring + '\\mask' + str(index) + '.png')
-
-    # Define the target color and color range
-    target_color = (cutoffB, cutoffG, cutoffR)  # OpenCV order of colors is BGR
-    # Calculate the percentage of the image that is within the color range of the target
-    lower_bound = np.clip(np.array(target_color) - color_rangelower, 0, 255)
-    upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
-    mask = cv2.inRange(image, lower_bound, upper_bound)
-
-    cv2.imwrite(path + '\\masks\\mask' + str(index) + '.png', mask)  # Save mask for testing
+    else:
+        # Define the target color and color range
+        target_color = (cutoffB, cutoffG, cutoffR)  # OpenCV order of colors is BGR
+        # Calculate the percentage of the image that is within the color range of the target
+        lower_bound = np.clip(np.array(target_color) - color_rangelower, 0, 255)
+        upper_bound = np.clip(np.array(target_color) + color_rangeupper, 0, 255)
+        print(lower_bound, upper_bound)
+        mask = cv2.inRange(image, lower_bound, upper_bound)
+        cv2.imwrite(path + '\\masks_' + channelstring + '\\mask' + str(index) + '.png', mask)  # Save mask
     index += 1
     num_pixels = image.shape[0] * image.shape[1]
 
@@ -51,7 +53,7 @@ def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_range
 def showImagesFromStack(stack, framerate, defaultFrame = 0):
     cols = int(stack.shape[0]/framerate)
     fig, axes = plt.subplots(nrows=1, ncols=cols, dpi=500)
-    if cols >> 1:
+    if cols > 1:
         for i in range(cols):
             im = stack[1 + i*framerate]
             axes[i].imshow(im)
@@ -143,38 +145,38 @@ def cropper(img, imgStack):
     cv2.destroyAllWindows()
     return cropped_stack
 
-def areaList(imageStack, cutoffs, color_rangelower = 45, color_rangeupper = 250, quenching = None):
+def areaList(listOfImageStacks, cutoffs, color_rangelower = 45, color_rangeupper = 250, quenching = None, redo = False):
     global index
     areaByChannel = []
     if quenching == None:
-        quenching = [False for i in range(len(imageStack))]
+        quenching = [False for i in range(len(listOfImageStacks))]
 
-    for channel in range(len(imageStack)):
+    for channel in range(len(listOfImageStacks)):
         areaList = []
-        for i in range(imageStack[channel].shape[0]):
+        for i in range(listOfImageStacks[channel].shape[0]):
             if quenching[channel]:
-                areaList.append(1-(getArea(imageStack[i], cutoffs[channel][0], cutoffs[channel][1], cutoffs[channel][2], color_rangelower, color_rangeupper, str("channel" + channel))))
+                areaList.append(100-(getArea(listOfImageStacks[channel][i], cutoffs[channel][0], cutoffs[channel][1], cutoffs[channel][2], color_rangelower, color_rangeupper, channelstring= "channel" + str(channel), redo = redo)))
             else:
-                areaList.append(getArea(imageStack[i], cutoffs[channel][0], cutoffs[channel][1], cutoffs[channel][2], color_rangelower, color_rangeupper, str("channel" + channel)))
-        areaByChannel[i].append(areaList)
+                areaList.append(getArea(listOfImageStacks[channel][i], cutoffs[channel][0], cutoffs[channel][1], cutoffs[channel][2], color_rangelower, color_rangeupper, channelstring= "channel" + str(channel), redo = redo))
+        areaByChannel.append(areaList)
+
         index = 0
     return areaByChannel
 
-def output(imageStack, cutoffB = 0, cutoffG = 130, cutoffR = 0, color_rangelower = 45, color_rangeupper = 250):
+def output(areaListPerChannel):
     xValues = [voxelDim.get("T") * i for i in range(imageStack.shape[0])]
-    areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
-    plt.plot(xValues, areaValues)
-    plt.xticks(np.arange(0, len(areaValues)*voxelDim.get("T"), 30))
-    plt.xlim(0, len(areaValues)*voxelDim.get("T")+1)
+    plt.plot(xValues, areaListPerChannel)
+    plt.xticks(np.arange(0, len(areaListPerChannel)*voxelDim.get("T"), 30))
+    plt.xlim(0, len(areaListPerChannel)*voxelDim.get("T")+1)
     plt.xlabel('time [s]')
     plt.ylabel('active area [%]')
     plt.title("Active area over time")
     plt.show()
 
 
-def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45, color_rangeupper=250, echemData=None):
-    xValuesImageStack = [voxelDim.get("T") * i for i in range(imageStack.shape[0])]
-    areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
+def outputWithEchem(areaListPerChannel, echemData=None):
+    xValuesImageStack = [voxelDim.get("T") * i for i in range(len(areaListPerChannel))]
+
     if echemData is not None:
         ydata = []
         xdata = [int(i)+timeDiff for i in echemData[2][2:]]
@@ -193,10 +195,10 @@ def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelo
     color = 'tab:red'
     ax1.set_xlabel('time [s]', labelpad=5)
     ax1.set_ylabel('active area [%]', color=color)
-    ax1.plot(xValuesImageStack, areaValues, color=color)
+    ax1.plot(xValuesImageStack, areaListPerChannel, color=color)
     ax1.tick_params(axis='y', labelcolor=color)
     ax1.tick_params(axis = 'x', pad = 10)
-    ax1.set_xlim(0, len(areaValues)*voxelDim.get("T")+1)
+    ax1.set_xlim(0, len(areaListPerChannel)*voxelDim.get("T")+1)
     ax1.set_title("Active area and electrochemical data over time")
     ax2 = ax1.twinx()
     color = 'tab:blue'
@@ -211,21 +213,21 @@ def outputWithEchem(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelo
     fig.savefig(path + '\\plots\\plotAreaAndEchem.png', bbox_inches='tight')  # Save mask for testing
 
 
-def userInput():
-    master = tk.Tk()
-    e = tk.Entry(master)
-    e.pack()
-
-    e.focus_set()
-
-    def callback():
-        print(e.get())  # This is the text you may want to use later
-        master.quit()
-
-    b = tk.Button(master, text="OK", width=10, command=callback)
-    b.pack()
-
-    e.mainloop()
+# def userInput():
+#     master = tk.Tk()
+#     e = tk.Entry(master)
+#     e.pack()
+#
+#     e.focus_set()
+#
+#     def callback():
+#         print(e.get())  # This is the text you may want to use later
+#         master.quit()
+#
+#     b = tk.Button(master, text="OK", width=10, command=callback)
+#     b.pack()
+#
+#     e.mainloop()
 
 
 def histogram(imageStack, percentile = 0.75):
@@ -256,10 +258,9 @@ def histogram(imageStack, percentile = 0.75):
 
     return cutoffs
 
-def activity(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45, color_rangeupper=250, echemData=None):
+def activity(imageStack, areaListPerChannel, echemData=None):
     #currentdensity per active area is the idea
-    areaPercentageValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
-    percentageArray = np.array(areaPercentageValues)
+    percentageArray = np.array(areaListPerChannel)
     areaValues = ((percentageArray/100)*(imageStack.shape[2]*voxelDim.get("X")*imageStack.shape[1]*voxelDim.get("Y"))).tolist()
 
     ydata = []
@@ -289,11 +290,9 @@ def activity(imageStack, cutoffB=0, cutoffG=130, cutoffR=0, color_rangelower=45,
     plt.savefig(path + '\\plots\\plotActivity.png', bbox_inches='tight')  # Save mask for testing
     plt.show()
 
-def difArea(imageStackDye1, imageStackDye2, quenchingDye1 = False, quenchingDye2 = False, cutoffB1=0, cutoffG1=130, cutoffR1=0, cutoffB2=130, cutoffG2=0, cutoffR2=0, color_rangelower=45, color_rangeupper=250):
+def difArea(areaListPerChannel1, areaListPerChannel2):
     xValuesImageStack = [voxelDim.get("T") * i for i in range(imageStackDye1.shape[0])]
-    areaValuesDye1 = areaList(imageStackDye1, cutoffB1, cutoffG1, cutoffR1, color_rangelower, color_rangeupper, quenchingDye1)
-    areaValuesDye2 = areaList(imageStackDye2, cutoffB2, cutoffG2, cutoffR2, color_rangelower, color_rangeupper, quenchingDye2)
-    areaDif = [i-j for i,j in zip(areaValuesDye1, areaValuesDye2)]
+    areaDif = [i-j for i,j in zip(areaListPerChannel1, areaListPerChannel2)]
 
     plt.plot(xValuesImageStack, areaDif)
     plt.xticks(np.arange(0, len(areaDif) + 1, 30))
