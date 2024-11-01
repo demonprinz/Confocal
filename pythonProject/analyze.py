@@ -156,7 +156,7 @@ def output(imageStack, cutoffB = 0, cutoffG = 130, cutoffR = 0, color_rangelower
     areaValues = areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)
     plt.plot(xValues, areaValues)
     plt.xticks(np.arange(0, len(areaValues)*voxelDim.get("T"), 30))
-    plt.xlim(0, len(ydata)+1)
+    plt.xlim(0, len(areaValues)*voxelDim.get("T")+1)
     plt.xlabel('time [s]')
     plt.ylabel('active area [%]')
     plt.title("Active area over time")
@@ -314,11 +314,12 @@ def threeDPixellinePlot(imageStack, pixelline = None, pixelwidth = 2 ):
         lineIntensities /= pixelwidth
         lineIntensities = np.flip(lineIntensities, axis = 0)
         box = np.ones(int(pixelwidth*(2/3))) / int(pixelwidth*(2/3))
-        intensities_smooth = np.convolve(lineIntensities, box, mode='same')/255
+        intensities_smooth = np.convolve(lineIntensities, box, mode='same')
         intensitiesOverTime[imageindex] = intensities_smooth
 
     x,y = np.meshgrid(np.arange(0, (imageStack.shape[0]-1)), np.arange(0, imageStack.shape[1]))
     intensitiesOverTime = np.transpose(intensitiesOverTime)
+    intensitiesOverTime /= np.max(intensitiesOverTime)
     fig = plt.figure()
     ax = plt.axes(projection='3d')
     surf = ax.plot_surface(x*voxelDim.get("T"), y*voxelDim.get("Y"), intensitiesOverTime, cmap=cm.inferno)
@@ -346,10 +347,12 @@ def twoDPixellinePlot(imageStack, pixelline=None, pixelwidth=2):
         lineIntensities /= pixelwidth
         lineIntensities = np.flip(lineIntensities, axis=0)
         box = np.ones(int(pixelwidth * (2 / 3))) / int(pixelwidth * (2 / 3))
-        intensities_smooth = np.convolve(lineIntensities, box, mode='same') / 255
+        intensities_smooth = np.convolve(lineIntensities, box, mode='same')
         intensitiesOverTime[imageindex] = intensities_smooth
 
     intensitiesOverTime = np.transpose(intensitiesOverTime)
+    intensitiesOverTime /= np.max(intensitiesOverTime)
+
     plt.imshow(intensitiesOverTime, extent=[0,imageStack.shape[0]*voxelDim.get("T"),imageStack.shape[1]*voxelDim.get("Y"),0], vmin=0, vmax=1, cmap='inferno')
     cbar = plt.colorbar()
     cbar.set_label('Intensity I/$I_{max}$', size=12)
