@@ -25,9 +25,12 @@ timeDiff = 0
 path = ""
 
 
-def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250):
-    #image = cv2.imread("test.png")
+def getArea(image, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250, channelstring = None):
     global index
+
+    if os.path.exists(path + '\\masks_' + channelstring + '\\mask' + str(index) + '.png'):
+        mask = cv2.imread(path + '\\masks_' + channelstring + '\\mask' + str(index) + '.png')
+
     # Define the target color and color range
     target_color = (cutoffB, cutoffG, cutoffR)  # OpenCV order of colors is BGR
     # Calculate the percentage of the image that is within the color range of the target
@@ -140,16 +143,22 @@ def cropper(img, imgStack):
     cv2.destroyAllWindows()
     return cropped_stack
 
-def areaList(imageStack, cutoffB, cutoffG, cutoffR, color_rangelower = 45, color_rangeupper = 250, quenching = False):
+def areaList(imageStack, cutoffs, color_rangelower = 45, color_rangeupper = 250, quenching = None):
     global index
-    areaList = []
-    for i in range(imageStack.shape[0]):
-        if quenching:
-            areaList.append(1-(getArea(imageStack[i], cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper)))
-        else:
-            areaList.append(getArea(imageStack[i], cutoffB, cutoffG, cutoffR, color_rangelower, color_rangeupper))
-    index = 0
-    return areaList
+    areaByChannel = []
+    if quenching == None:
+        quenching = [False for i in range(len(imageStack))]
+
+    for channel in range(len(imageStack)):
+        areaList = []
+        for i in range(imageStack[channel].shape[0]):
+            if quenching[channel]:
+                areaList.append(1-(getArea(imageStack[i], cutoffs[channel][0], cutoffs[channel][1], cutoffs[channel][2], color_rangelower, color_rangeupper, str("channel" + channel))))
+            else:
+                areaList.append(getArea(imageStack[i], cutoffs[channel][0], cutoffs[channel][1], cutoffs[channel][2], color_rangelower, color_rangeupper, str("channel" + channel)))
+        areaByChannel[i].append(areaList)
+        index = 0
+    return areaByChannel
 
 def output(imageStack, cutoffB = 0, cutoffG = 130, cutoffR = 0, color_rangelower = 45, color_rangeupper = 250):
     xValues = [voxelDim.get("T") * i for i in range(imageStack.shape[0])]

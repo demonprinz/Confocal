@@ -53,11 +53,23 @@ imgStack = stacking.stackingImages(imgList)
 
 subStack = analyze.substractDust(imgStack)
 #get stacked images of the catalyst area only
-
 cropped_stack= analyze.cropper(subStack[0][int(len(subStack[0])/2)], subStack)
+
+#calculating the brightness value above which a pixel is called active
 cutoffs = []
 for i in range(len(channels)):
     cutoffs.append(analyze.histogram(cropped_stack[i], 0.75))
+
+#get the list with area percentages
+quenching = [False for i in range(len(channels))]
+
+if len(channels) > 2:
+    quenching[3] = True
+
+
+areaList = analyze.areaList(cropped_stack, cutoffs, quenching = quenching)
+
+
 #analyze.showImagesFromStack(cropped_stack[0], 100, 140)
 
 #analyze.outputWithEchem(cropped_stack[0], cutoffB= cutoffs[0][0], cutoffG= cutoffs[0][1], cutoffR= cutoffs[0][2], color_rangelower= 0, echemData = echemData)
