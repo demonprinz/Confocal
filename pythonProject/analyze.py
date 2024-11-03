@@ -291,7 +291,7 @@ def activity(imageStack, areaListPerChannel, echemData=None):
     plt.show()
 
 def difArea(areaListPerChannel1, areaListPerChannel2):
-    xValuesImageStack = [voxelDim.get("T") * i for i in range(imageStackDye1.shape[0])]
+    xValuesImageStack = [voxelDim.get("T") * i for i in range(len(areaListPerChannel1))]
     areaDif = [i-j for i,j in zip(areaListPerChannel1, areaListPerChannel2)]
 
     plt.plot(xValuesImageStack, areaDif)
