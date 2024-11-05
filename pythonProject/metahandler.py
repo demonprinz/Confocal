@@ -5,7 +5,7 @@ import itertools
 import datetime
 from matplotlib.backend_bases import NonGuiException
 
-voxelDim= {}
+
 
 def getVoxelDimensions(datapath):
    #find properties file
@@ -17,7 +17,7 @@ def getVoxelDimensions(datapath):
             continue
          metadatapath = (os.path.join(root, file))
 
-
+   voxelDim = {}
    root = ET.parse(metadatapath).getroot()
    for type_tag in root.findall('Image/ImageDescription/Dimensions/DimensionDescription'):
       voxelDim[type_tag.get('DimID')] = type_tag.get('Voxel')
@@ -27,6 +27,28 @@ def getVoxelDimensions(datapath):
 
    for i, j in voxelDim.items():
       voxelDim[i] = float(j)
+   return voxelDim
+
+def getShapeDimensions(datapath):
+   #find properties file
+   shapeDim = {}
+   frametime = 1
+   frametimeStr = None
+   for root, dirs, files in os.walk(datapath):
+      for file in files:
+         if not file.endswith('Properties.xml'):
+            continue
+         metadatapath = (os.path.join(root, file))
+
+
+   root = ET.parse(metadatapath).getroot()
+   for type_tag in root.findall('Image/ImageDescription/Dimensions/DimensionDescription'):
+      voxelDim[type_tag.get('DimID')] = type_tag.get('NumberOfElements')
+
+   for i, j in voxelDim.items():
+      shapeDim[i] = int(j)
+
+   return shapeDim
 
 
 def getTimeDifference(metapath, echempath):

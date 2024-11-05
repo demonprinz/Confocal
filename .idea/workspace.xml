@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="refactoring area calculation">
+    <list default="true" id="50d813af-7c18-4bd8-a502-6991c3301f88" name="Changes" comment="3D imaging works kind of">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/metahandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/metahandler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/process3D.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/process3D.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/stacking.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/stacking.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +248,8 @@
       <workItem from="1730414799524" duration="4571000" />
       <workItem from="1730474955579" duration="472000" />
       <workItem from="1730675012719" duration="4185000" />
-      <workItem from="1730682851090" duration="3801000" />
+      <workItem from="1730682851090" duration="7705000" />
+      <workItem from="1730730724114" duration="20085000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of myin python file">
       <option name="closed" value="true" />
@@ -582,7 +587,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730419353569</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="3D imaging works kind of">
+      <option name="closed" value="true" />
+      <created>1730687025610</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1730687025610</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -600,7 +613,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="start writing analyze.py. Displaying an Image stack using a variable frame rate" />
     <MESSAGE value="fixing a bug with displaying only a single frame. defaulting to the first frame, frame can be selected by handing an argument to defaultFrame" />
     <MESSAGE value="first idea to remove the brigt dust spots" />
     <MESSAGE value="trying to calculate area, some wierd results comparing different ways to load the same image from a file or directly within python" />
@@ -625,7 +637,8 @@
     <MESSAGE value="First attempt to plot difference in area covered by the second dye vs the first one" />
     <MESSAGE value="3D Plot of intensity moving through a line of pixels works" />
     <MESSAGE value="2D and 3D plotting of intensity moving through a line of pixels works" />
-    <option name="LAST_COMMIT_MESSAGE" value="2D and 3D plotting of intensity moving through a line of pixels works" />
+    <MESSAGE value="3D imaging works kind of" />
+    <option name="LAST_COMMIT_MESSAGE" value="3D imaging works kind of" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -645,7 +658,7 @@
     <SUITE FILE_PATH="coverage/Confocal$stacking.coverage" NAME="stacking Coverage Results" MODIFIED="1727475888248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$analyze.coverage" NAME="analyze Coverage Results" MODIFIED="1729095472092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$test.coverage" NAME="test Coverage Results" MODIFIED="1727748909089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
-    <SUITE FILE_PATH="coverage/Confocal$process3D.coverage" NAME="process3D Coverage Results" MODIFIED="1730686669756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
+    <SUITE FILE_PATH="coverage/Confocal$process3D.coverage" NAME="process3D Coverage Results" MODIFIED="1730765615665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$GUI.coverage" NAME="GUI Coverage Results" MODIFIED="1727683526957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
     <SUITE FILE_PATH="coverage/Confocal$Confocal_main.coverage" NAME="Confocal_main Coverage Results" MODIFIED="1727386903713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythonProject" />
   </component>

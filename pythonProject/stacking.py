@@ -51,7 +51,7 @@ def stackingImages(imgLists):
     return imgStacks
 
 def sortFilenames(imgDirectory, channels):
-    for file in os.listdir(imgDirectory):
+    for file in sorted(os.listdir(imgDirectory)):
         filename = os.fsdecode(file)
         # sorting images into their channels
         sort(filename, channels)

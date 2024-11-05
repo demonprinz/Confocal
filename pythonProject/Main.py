@@ -12,6 +12,7 @@ import promptlib
 import os
 import metahandler
 from pythonProject.analyze import histogram
+import process3D
 
 # read image files
 
@@ -26,8 +27,9 @@ analyze.path = imgFolderPath
 imgDirectory = os.fspath(imgFolderPath)
 
 #get frametime
-metahandler.getVoxelDimensions(imgFolderPath)
-analyze.voxelDim = metahandler.voxelDim
+analyze.voxelDim = metahandler.getVoxelDimensions(imgFolderPath)
+process3D.voxelDim = metahandler.getVoxelDimensions(imgFolderPath)
+process3D.shapeDim = metahandler.getShapeDimensions(imgFolderPath)
 
 
 #get echemdata

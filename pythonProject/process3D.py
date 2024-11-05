@@ -6,28 +6,32 @@ import matplotlib.pyplot as plt
 import itk
 import napari
 from skimage import color
+import re
+import stacking
 
-voxel_size_x = 0.355
-voxel_size_y = 0.355
-voxel_size_z = 2.588
-voxel_size_t = 9.583
+voxelDim = {}
+shapeDim = {}
 
-aspect_xz = voxel_size_z/voxel_size_x
-aspect_yz = voxel_size_z/voxel_size_y
-
-def imageStacker(image_folder):
-    pathlist = []
+aspect_xz = 1
+aspect_yz = 1
+def imageStackerPerChannel(path, channel):
     imageList= []
+    # 3Dimagearray has the shape (No. of frames in 3D, No. of frames in 2D, X, Y, Color)
+    arrayOfThreeDim = np.zeros((shapeDim.get("T"), shapeDim.get("Z"), shapeDim.get("Y"), shapeDim.get("X"), 3))
+    channelByTime = [[] for i in range(shapeDim.get("T"))]
 
-    for filename in sorted(os.listdir(image_folder)):
-        if filename.endswith('.tif') or filename.endswith('.tiff'):  # Handle both .tif and .tiff
-            img_path = os.path.join(image_folder, filename)
-            pathlist.append(img_path)
-    for i in range(len(pathlist)):
-        imageList.append(iio.imread(pathlist[i]))
+    for imagepath in channel:
+        matchTime = re.search(r't(\d+)', imagepath)
+        channelByTime[int(matchTime.group(1))].append(imagepath)
 
-    imageStack = np.stack(imageList)
-    return imageStack
+    for timestamp in range(len(channelByTime)):
+        if channelByTime[timestamp] != []:
+            for imagepath in channelByTime[timestamp]:
+                imageList.append(itkImaging(iio.v3.imread(path + imagepath)))
+            arrayOfThreeDim[timestamp] = np.stack(imageList)
+        imageList = []
+
+    return arrayOfThreeDim
 
 def showXYZprojection(image):
     max_z = np.max(image, axis = 0)
@@ -44,16 +48,25 @@ def showXYZprojection(image):
 
 def itkImaging(image):
     itkImage = itk.image_view_from_array(image)
-    itkImage.SetSpacing(np.double([voxel_size_x, voxel_size_y, voxel_size_z]))
+    itkImage.SetSpacing(np.double([voxelDim.get("X"), voxelDim.get("Y"), voxelDim.get("Z")]))
     return itkImage
 
 
 if __name__ == "__main__":
-    image_folder = "C:\\Users\\schol\\Documents\\GitRepos\\Confocal\\Confocal\\pythonProject\\images"
-    stack = imageStacker(image_folder)
+    image_folder = "C:\\Users\\schol\\Documents\\AVT\\04_Experimentals\\20240903-pasc10\\Series005"
+    channels = [[] for i in range(stacking.getNumberOfChannels(image_folder))]
+    channels = stacking.sortFilenames(image_folder, channels)
+
+    shapeDim = {"X" : 1024, "Y" : 512, "Z" : 14, "T" : 45}
+    voxelDim = {"X" : 0.355, "Y" : 0.355, "Z" : 2.588, "T" : 9.583}
+
+    aspect_xz = voxelDim.get("Z") / voxelDim.get("X")
+    aspect_yz = voxelDim.get("Z") / voxelDim.get("Y")
+
+    stack = imageStackerPerChannel(image_folder, channels[0])
     graystack = color.rgb2gray(stack)
-    print(graystack.shape)
+
     viewer = napari.Viewer()
 
-    viewer.add_image(itkImaging(graystack))
+    viewer.add_image(graystack)
     napari.run()
