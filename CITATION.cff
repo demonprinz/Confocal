@@ -1,0 +1,19 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Confocal_data_analyzer
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Patrick
+    family-names: Scholz
+    email: p.scholz@fz-juelich.de
+    affiliation: IFN-1
+    orcid: 'https://orcid.org/0009-0003-3544-3274'
+repository-code: 'https://github.com/demonprinz/Confocal'
+license: CC0-1.0
+commit: 913d62fbdb05259c83b7977229f6fb868adbcaf1
+version: V0.8
